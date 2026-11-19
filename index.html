@@ -227,6 +227,12 @@ textarea{resize:vertical}
 .lot-btn:disabled{cursor:default}
 .lot-btn:disabled:not(.sold):not(.on){opacity:.5}
 .sold-tag{background:var(--tc);color:var(--on-sale);border-radius:4px;padding:0 .35rem;font-weight:700}
+.lot-btn.next{background:var(--burst);animation:pulse 1.6s ease-in-out infinite}
+.th.q{display:grid;place-items:center;background:var(--ink);color:var(--burst);font-family:var(--f-display);font-weight:800;font-size:1.5rem;line-height:1}
+.lot-mys .cover-no{font-size:6.5rem}
+.mys-q{font-family:var(--f-display);font-weight:800;font-size:7rem;line-height:1;width:10rem;height:10rem;border-radius:50%;background:var(--card);color:var(--sale);display:grid;place-items:center;border:.3rem solid var(--ink);box-shadow:.35rem .35rem 0 var(--ink)}
+.linkbtn{background:none;border:0;padding:0;color:inherit;font:inherit;text-decoration:underline;cursor:pointer}
+.lot-card.pop{animation:qpop .55s cubic-bezier(.2,1.5,.4,1) both}
 .stage{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:1.1rem;min-height:0}
 .stage-empty{background:var(--card);border:.22rem dashed var(--ink);border-radius:1.2rem;padding:2rem;display:grid;gap:.7rem;justify-items:start;align-content:center}
 .stage-empty h2{font-size:3rem;font-weight:800}
@@ -430,7 +436,7 @@ const clone=o=>JSON.parse(JSON.stringify(o));
 const r2=n=>Math.round((+n||0)*100)/100;
 const money=n=>{n=r2(n);return Number.isInteger(n)?n.toLocaleString('en-US'):n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});};
 const sum=a=>a.reduce((x,y)=>x+(+y||0),0);
-const LS='percent-mega-sale-v3';
+const LS='percent-mega-sale-v4';
 const TEAM_C=['--t0','--t1','--t2'];
 const tc=i=>`--tc:var(${TEAM_C[i]})`;
 const CH=['ก','ข','ค','ง'];
@@ -467,17 +473,18 @@ const DQ=[
  {id:'b3',tier:4,img:'img/b3.jpg',icon:'🏷️',item:'Black Friday',tags:[],text:'Black Friday คือวันศุกร์ถัดจากวันหยุดใดของสหรัฐอเมริกา?',choices:['วันคริสต์มาส','วันฮาโลวีน','วันขอบคุณพระเจ้า','วันประกาศอิสรภาพ'],correct:2,reward:'CB20',answer:'วันขอบคุณพระเจ้า (Thanksgiving)',steps:['วันขอบคุณพระเจ้าตรงกับวันพฤหัสบดีที่ 4 ของเดือนพฤศจิกายน','ปี 2569 Black Friday ตรงกับวันที่ 27 พฤศจิกายน']},
 ];
 const DL=[
- {id:'l1',img:'img/l1.jpg',icon:'🥔',name:'เลย์ รสคลาสสิก',store:32,start:50,mystery:false},
- {id:'l2',img:'img/l2.jpg',icon:'🍫',name:'คิทแคท',store:25,start:50,mystery:false},
- {id:'l3',img:'img/l3.jpg',icon:'🍪',name:'โอรีโอ',store:45,start:50,mystery:false},
- {id:'l4',img:'img/l4.jpg',icon:'🍬',name:'เยลลี่หมี ฮาริโบ้',store:35,start:40,mystery:false},
- {id:'l5',img:'img/l5.jpg',icon:'🧃',name:'นมกล่อง แพ็ก 4',store:48,start:50,mystery:false},
- {id:'l6',img:'img/l6.jpg',icon:'🎁',name:'กล่องสุ่มปริศนา',store:60,start:80,mystery:true},
+ {id:'l1',img:'img/l1.jpg',icon:'🍘',name:'โดโซะ รสกลมกล่อม',store:20,start:30,mystery:false},
+ {id:'l2',img:'img/l2.jpg',icon:'🧀',name:'ชีโตส ทวิสต์ รสปาปริก้าชีส',store:20,start:30,mystery:false},
+ {id:'l3',img:'img/l3.jpg',icon:'🍤',name:'ตะวัน จัมโบ้แพ็ค รสสาหร่าย',store:30,start:40,mystery:false},
+ {id:'l4',img:'img/l4.jpg',icon:'🍗',name:'ตะวัน รสไก่วิงซ์แซ่บ แพ็ค 2 ห่อ',store:40,start:50,mystery:false},
+ {id:'l5',img:'img/l5.jpg',icon:'🍠',name:'โดโซะ รสคอร์นชีส',store:20,start:30,mystery:false},
+ {id:'l6',img:'img/l6.jpg',icon:'🌭',name:'โดโซะ รสซอสเซจ-จิ',store:20,start:30,mystery:false},
+ {id:'l7',img:'img/l7.jpg',icon:'🧅',name:'ชีโตส พัฟ รสซาวครีมหัวหอม',store:20,start:30,mystery:false},
 ];
 const DEF_IMG=Object.fromEntries([...DQ,...DL].map(x=>[x.id,x.img]));
 const TEAM_NAMES=['ทีมฟ้า','ทีมเขียว','ทีมม่วง'];
 function freshState(){
-  return {v:3,settings:{budget:500,payTime:45,step:10},
+  return {v:4,settings:{budget:500,payTime:45,step:10},
     teams:TEAM_NAMES.map(n=>({name:n,budget:500,wallet:[],basket:[]})),
     questions:clone(DQ),lots:clone(DL),qDone:{},qLocked:{},lotDone:{},
     view:'home',curQ:null,auction:null,seq:1,sound:true};
@@ -485,7 +492,7 @@ function freshState(){
 let S;
 const UI={modal:null,revealed:false,openQ:null,cover:false,pop:false};
 function save(){try{localStorage.setItem(LS,JSON.stringify(S));return true;}catch(e){return false;}}
-function load(){try{const s=JSON.parse(localStorage.getItem(LS)||'null');if(s&&s.v===3&&Array.isArray(s.teams))return s;}catch(e){}return null;}
+function load(){try{const s=JSON.parse(localStorage.getItem(LS)||'null');if(s&&s.v===4&&Array.isArray(s.teams))return s;}catch(e){}return null;}
 
 /* ---------- เสียง ---------- */
 let AC=null;
@@ -658,15 +665,29 @@ function vQuestion(){
 function nextBid(){const a=S.auction,l=getLot(a.lotId);return a.leader==null?l.start:a.high+S.settings.step;}
 function vAuction(){
   const a=S.auction;
+  /* เปิดทีละ LOT ตามลำดับ: LOT ที่ยังไม่ขายเป็นปริศนา เปิดได้เฉพาะ LOT แรกที่ยังไม่ขาย */
+  const nextIdx=S.lots.findIndex(l=>!S.lotDone[l.id]),total=S.lots.length;
   const list=S.lots.map((l,i)=>{const d=S.lotDone[l.id],on=a&&a.lotId===l.id;
-    return `<button class="lot-btn ${d?'sold':''} ${on?'on':''}" data-act="lot" data-l="${l.id}" ${d||(a&&!on)?'disabled':''}>${thumb(l.img,l.name,l.icon)}<span class="ln">LOT ${i+1} · ${esc(l.name)}</span><span class="ls">${d?`<span class="sold-tag" style="${tc(d.team)}">${esc(S.teams[d.team].name)} ฿${money(d.paid)}</span>`:on?'กำลังประมูล':`เปิด ฿${money(l.start)}`}</span></button>`;}).join('');
+    if(d||on)return `<button class="lot-btn ${d?'sold':''} ${on?'on':''}" data-act="lot" data-l="${l.id}" disabled>${thumb(l.img,l.name,l.icon)}<span class="ln">LOT ${i+1} · ${esc(l.name)}</span><span class="ls">${d?`<span class="sold-tag" style="${tc(d.team)}">${esc(S.teams[d.team].name)} ฿${money(d.paid)}</span>`:'กำลังประมูล'}</span></button>`;
+    const isNext=!a&&i===nextIdx;
+    return `<button class="lot-btn mys ${isNext?'next':''}" data-act="lot" data-l="${l.id}" ${isNext?'':'disabled'}><span class="th q" aria-hidden="true">?</span><span class="ln">LOT ${i+1} · ปริศนา</span><span class="ls">${isNext?'ชิ้นถัดไป · กดเพื่อเปิด':'รอเปิด'}</span></button>`;}).join('');
   let stage;
-  if(!a){const left=S.lots.filter(l=>!S.lotDone[l.id]).length;
-    stage=`<div class="stage-empty"><p class="eyebrow">กิจกรรม 2</p><h2>ประมูลขนม</h2><p class="big">${left?'กดเลือกขนมจากรายการเพื่อเปิดประมูล':'ขายครบทุกชิ้นแล้ว'}</p><div class="row"><button class="btn yellow" data-act="rules" data-k="a2">กติกา</button>${left?'':'<button class="btn primary" data-go="results">ดูสรุปผล →</button>'}</div></div>`;
+  if(!a){
+    if(nextIdx>=0){const l=S.lots[nextIdx],sold=Object.keys(S.lotDone).length;
+      stage=`<div class="cover-card lot-mys">
+       <p class="cover-k">${sold?`ขายไปแล้ว ${sold} ชิ้น · ชิ้นต่อไปคือ…`:'ขนมชิ้นแรกคือ…'}</p>
+       <p class="cover-no">LOT ${nextIdx+1}</p>
+       <p class="mys-q" aria-hidden="true">?</p>
+       <button class="go" data-act="lot" data-l="${l.id}" id="go-lot">เปิดดูขนม!</button>
+       <p class="cover-hint">จาก ${total} ชิ้น · ชิ้นอื่นยังเป็นปริศนา · กด Space หรือ Enter ก็ได้ · <button class="linkbtn" data-act="rules" data-k="a2">ดูกติกา</button></p>
+      </div>`;
+    }else{
+      stage=`<div class="stage-empty"><p class="eyebrow">กิจกรรม 2</p><h2>ขายครบทุกชิ้นแล้ว</h2><p class="big">ไปดูว่าทีมไหนช้อปคุ้มที่สุด</p><div class="row"><button class="btn primary" data-go="results">ดูสรุปผล →</button></div></div>`;
+    }
   }else{
     const l=getLot(a.lotId),idx=S.lots.indexOf(l),nb=nextBid(),leader=a.leader!=null?S.teams[a.leader]:null;
     stage=`<div class="stage">
-     <div class="lot-card"><span class="lot-no">LOT ${idx+1}</span>${photo(l.img,l.name,l.icon)}<h2 class="lot-name">${esc(l.name)}</h2>
+     <div class="lot-card ${UI.pop?'pop':''}"><span class="lot-no">LOT ${idx+1} / ${total}</span>${photo(l.img,l.name,l.icon)}<h2 class="lot-name">${esc(l.name)}</h2>
       <div class="lot-meta"><span>ราคาในร้าน <b>${l.mystery?'???':'฿'+money(l.store)}</b></span><span>เปิดประมูล <b>฿${money(l.start)}</b></span></div></div>
      <div class="bid-zone">
       <div class="bid-now" ${leader?`style="${tc(a.leader)}"`:''}><small>${leader?'ราคาสูงสุดตอนนี้':'ยังไม่มีทีมเสนอราคา'}</small><b class="bid-num" id="bidnum">฿${money(leader?a.high:l.start)}</b>${leader?`<span class="leader">${esc(leader.name)} นำอยู่</span>`:'<span class="leader none">ราคาเปิด</span>'}<button class="count" id="count" data-act="cancel-count" hidden></button></div>
@@ -741,7 +762,8 @@ function vSetup(){
        <label class="mini">ราคาในร้าน<input id="lst${i}" type="number" min="0" data-bind="lot" data-i="${i}" data-f="store" value="${l.store}"></label>
        <label class="mini">เปิดประมูล<input id="lsp${i}" type="number" min="0" step="10" data-bind="lot" data-i="${i}" data-f="start" value="${l.start}"></label>
        <label class="mini chk"><input id="lmy${i}" type="checkbox" data-bind="lot" data-i="${i}" data-f="mystery" ${l.mystery?'checked':''}>ซ่อนราคา</label>
-       <button class="btn sm ghost" data-act="lot-del" data-i="${i}" ${S.lotDone[l.id]||(S.auction&&S.auction.lotId===l.id)?'disabled':''}>ลบ</button></div>`).join('')}</div>
+       <div class="row"><button class="btn sm ghost" data-act="lot-up" data-i="${i}" ${i===0?'disabled':''} aria-label="เลื่อน LOT ${i+1} ขึ้น">↑</button><button class="btn sm ghost" data-act="lot-down" data-i="${i}" ${i===S.lots.length-1?'disabled':''} aria-label="เลื่อน LOT ${i+1} ลง">↓</button><button class="btn sm ghost" data-act="lot-del" data-i="${i}" ${S.lotDone[l.id]||(S.auction&&S.auction.lotId===l.id)?'disabled':''}>ลบ</button></div></div>`).join('')}</div>
+     <p class="muted">ประมูลตามลำดับ LOT จากบนลงล่าง ใช้ปุ่ม ↑ ↓ สลับลำดับได้</p>
      <div class="row"><button class="btn sm" data-act="lot-add">เพิ่มขนม</button></div>
     </fieldset>
    </div>
@@ -760,7 +782,7 @@ function mRules(k){
    <ol class="rules"><li>ทุกทีมคิดพร้อมกัน เขียนวิธีคิดลงใบคิดเลข</li><li>ได้คำตอบแล้ว<b>ชูป้ายทีม</b> ทีมที่ชูก่อนได้ตอบก่อน</li><li>ถูก <b>รับคูปอง</b> · ผิด ทีมอื่นแย่งตอบได้</li><li>ข้อยิ่งยาก คูปองยิ่งลดเยอะ</li></ol>
    <div class="rule-coupons"><div>${coupon('P10','sm')}<small>★ ง่าย</small></div><div>${coupon('P20','sm')}<small>★★ กลาง</small></div><div>${coupon('P30','sm')}<small>★★★ ยาก</small></div><div>${coupon('F50','sm')}<small>โบนัส</small></div></div>`;
   return `<p class="eyebrow">กิจกรรม 2</p><h2>กติกาประมูลขนม</h2>
-   <ol class="rules"><li>ทุกทีมมีเงิน <b>฿${money(S.settings.budget)}</b> เท่ากัน</li><li>ชูป้ายเพื่อเสนอราคา เสนอได้ไม่เกินเงินที่มี</li><li>ครูนับ หนึ่ง สอง สาม แล้วเคาะ = ขายแล้ว</li><li>ใช้คูปองได้ 1 ใบต่อขนม 1 ชิ้น (“ลดเพิ่ม 10%” ใช้ร่วมได้)</li><li>ทีมต้อง<b>คิดราคาสุทธิเอง</b>ใน ${S.settings.payTime} วินาที ถูก จ่ายราคาลด · ผิด จ่ายเต็ม</li></ol>`;
+   <ol class="rules"><li>ขนมเปิดทีละ LOT ชิ้นต่อไปเป็น<b>ปริศนา</b>จนกว่าชิ้นก่อนจะขายเสร็จ</li><li>ทุกทีมมีเงิน <b>฿${money(S.settings.budget)}</b> เท่ากัน</li><li>ชูป้ายเพื่อเสนอราคา เสนอได้ไม่เกินเงินที่มี</li><li>ครูนับ หนึ่ง สอง สาม แล้วเคาะ = ขายแล้ว</li><li>ใช้คูปองได้ 1 ใบต่อขนม 1 ชิ้น (“ลดเพิ่ม 10%” ใช้ร่วมได้)</li><li>ทีมต้อง<b>คิดราคาสุทธิเอง</b>ใน ${S.settings.payTime} วินาที ถูก จ่ายราคาลด · ผิด จ่ายเต็ม</li></ol>`;
 }
 function mReset(){
   return `<p class="eyebrow">ล้างค่าในเกม</p><h2>รีเซ็ตเกม</h2>
@@ -825,7 +847,7 @@ function render(){
   renderTeams();renderModal();
   if(S.view==='q')tDraw();
   fitAll();
-  const gq=$('#go-q');if(gq&&!UI.modal)try{gq.focus({preventScroll:true});}catch(e){}
+  const gq=$('#go-q')||$('#go-lot');if(gq&&!UI.modal&&!(S.auction&&S.auction.co))try{gq.focus({preventScroll:true});}catch(e){}
   $('#snd').textContent=S.sound?'เสียง เปิด':'เสียง ปิด';
 }
 function go(v){if(!(S.auction&&S.auction.co))tStop();cancelCount();S.view=v;UI.modal=null;save();render();$('#view').scrollTop=0;}
@@ -880,7 +902,10 @@ const A={
   sound:()=>{S.sound=!S.sound;save();$('#snd').textContent=S.sound?'เสียง เปิด':'เสียง ปิด';if(S.sound)SFX.bid();},
   full:()=>{const d=document;try{if(d.fullscreenElement){d.exitFullscreen();return;}const p=d.documentElement.requestFullscreen&&d.documentElement.requestFullscreen();
     if(p&&p.catch)p.catch(()=>toast('เปิดเต็มจอจากหน้านี้ไม่ได้ ลองกด F11'));else if(!p)toast('เปิดเต็มจอจากหน้านี้ไม่ได้ ลองกด F11');}catch(e){toast('เปิดเต็มจอจากหน้านี้ไม่ได้ ลองกด F11');}},
-  lot:b=>{if(S.auction)return;S.auction={lotId:b.dataset.l,high:null,leader:null,log:[],co:null};save();render();},
+  lot:b=>{if(S.auction)return;const next=S.lots.find(l=>!S.lotDone[l.id]);if(!next||next.id!==b.dataset.l)return;
+    S.auction={lotId:next.id,high:null,leader:null,log:[],co:null};save();UI.pop=true;render();UI.pop=false;SFX.go();},
+  'lot-up':b=>{const i=+b.dataset.i;if(i<=0)return;[S.lots[i-1],S.lots[i]]=[S.lots[i],S.lots[i-1]];save();render();},
+  'lot-down':b=>{const i=+b.dataset.i;if(i>=S.lots.length-1)return;[S.lots[i+1],S.lots[i]]=[S.lots[i],S.lots[i+1]];save();render();},
   step:b=>{S.settings.step=+b.dataset.s;save();render();},
   bid:(b,t)=>{const a=S.auction;if(!a||a.co)return;const amt=nextBid();if(t===a.leader||amt>S.teams[t].budget)return;
     cancelCount();a.log.push({t,amt,ph:a.high,pl:a.leader});a.high=amt;a.leader=t;SFX.bid();save();render();bumpBid();},
@@ -923,7 +948,9 @@ document.addEventListener('click',e=>{
 });
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'&&UI.modal&&!(S.auction&&S.auction.co)){UI.modal=null;renderModal();return;}
-  if(S.view==='q'&&UI.cover&&!UI.modal&&(e.key===' '||e.key==='Enter')&&!(e.target.closest&&e.target.closest('button,input,select,textarea,summary,a'))){e.preventDefault();A['go-q']();}
+  if((e.key===' '||e.key==='Enter')&&!UI.modal&&!(e.target.closest&&e.target.closest('button,input,select,textarea,summary,a'))){
+    if(S.view==='q'&&UI.cover){e.preventDefault();A['go-q']();}
+    else if(S.view==='a2'&&!S.auction){const g=$('#go-lot');if(g){e.preventDefault();g.click();}}}
 });
 document.addEventListener('toggle',e=>{const d=e.target;if(d.classList&&d.classList.contains('qe')){if(d.open)UI.openQ=d.dataset.q;else if(UI.openQ===d.dataset.q)UI.openQ=null;}},true);
 function parseTags(v){return v.split('\n').map(s=>s.trim()).filter(Boolean).map(line=>{const p=line.split('|').map(x=>x.trim());
@@ -952,7 +979,7 @@ document.addEventListener('input',onBind);document.addEventListener('change',onB
 (function burst(){const pts=[];for(let i=0;i<28;i++){const a=(i*360/28-90)*Math.PI/180,r=i%2?41:50;pts.push(`${(50+r*Math.cos(a)).toFixed(1)}% ${(50+r*Math.sin(a)).toFixed(1)}%`);}
   document.documentElement.style.setProperty('--burst-poly',`polygon(${pts.join(',')})`);})();
 function start(data){
-  S=(data&&data.S&&data.S.v===3&&data.S)||load()||freshState();
+  S=(data&&data.S&&data.S.v===4&&data.S)||load()||freshState();
   const base=freshState();S.settings=Object.assign(base.settings,S.settings||{});S.qLocked=S.qLocked||{};
   if(S.view==='q'){const q=curQ();if(q){UI.revealed=!!S.qDone[q.id];UI.cover=!S.qDone[q.id];tSet(TIERS[q.tier].time,'#qtimer');}else S.view='a1';}
   if(S.auction&&S.auction.co&&S.auction.co.stage==='calc')S.auction.co.stage='reveal';
