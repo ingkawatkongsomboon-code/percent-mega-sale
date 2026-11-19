@@ -294,6 +294,13 @@ textarea{resize:vertical}
 .rule-coupons{display:flex;flex-wrap:wrap;gap:1rem}
 .rule-coupons>div{display:grid;gap:.2rem;justify-items:start}
 .rule-coupons small{font-weight:600;color:var(--ink-2)}
+.reset-opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.ropt{border:.2rem solid var(--ink);border-radius:1rem;padding:1rem 1.2rem;display:grid;gap:.5rem;align-content:start;background:var(--paper)}
+.ropt.all{border-style:dashed;border-color:var(--sale);background:var(--card)}
+.ropt h3{font-size:1.6rem}
+.ropt p{font-size:1.05rem;line-height:1.45}
+.ropt .btn{justify-self:start;font-size:1.15rem}
+@media (max-width:640px){.reset-opts{grid-template-columns:1fr}}
 .te-wallet{display:grid;gap:.5rem}
 .te-w{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
 .te-w.used .coupon{opacity:.45}
@@ -404,6 +411,7 @@ textarea{resize:vertical}
       <button data-go="setup">ตั้งค่า</button>
     </nav>
     <div class="tools">
+      <button class="tool" data-act="reset-open">รีเซ็ต</button>
       <button class="tool" data-act="sound" id="snd">เสียง เปิด</button>
       <button class="tool" data-act="full">เต็มจอ</button>
     </div>
@@ -754,6 +762,14 @@ function mRules(k){
   return `<p class="eyebrow">กิจกรรม 2</p><h2>กติกาประมูลขนม</h2>
    <ol class="rules"><li>ทุกทีมมีเงิน <b>฿${money(S.settings.budget)}</b> เท่ากัน</li><li>ชูป้ายเพื่อเสนอราคา เสนอได้ไม่เกินเงินที่มี</li><li>ครูนับ หนึ่ง สอง สาม แล้วเคาะ = ขายแล้ว</li><li>ใช้คูปองได้ 1 ใบต่อขนม 1 ชิ้น (“ลดเพิ่ม 10%” ใช้ร่วมได้)</li><li>ทีมต้อง<b>คิดราคาสุทธิเอง</b>ใน ${S.settings.payTime} วินาที ถูก จ่ายราคาลด · ผิด จ่ายเต็ม</li></ol>`;
 }
+function mReset(){
+  return `<p class="eyebrow">ล้างค่าในเกม</p><h2>รีเซ็ตเกม</h2>
+   <div class="reset-opts">
+    <div class="ropt"><h3>เริ่มเกมใหม่</h3><p>ล้างคูปอง เงิน ขนมที่ประมูลได้ และข้อที่ตอบแล้ว ทุกทีมกลับไปมี ฿${money(S.settings.budget)}</p><p class="muted">เก็บชื่อทีม โจทย์ ขนม และรูปที่ใส่เองไว้</p><button class="btn primary" data-act="newgame">เริ่มเกมใหม่</button></div>
+    <div class="ropt all"><h3>ล้างทุกอย่าง</h3><p>กลับเป็นค่าเริ่มต้นทั้งหมด เหมือนเพิ่งเปิดแอปครั้งแรก</p><p class="muted">ชื่อทีม โจทย์ ขนม และรูปที่ใส่เองจะหายด้วย</p><button class="btn" data-act="factory">ล้างทุกอย่าง</button></div>
+   </div>
+   <div class="row end"><button class="btn ghost" data-act="close">ยกเลิก</button></div>`;
+}
 function mTeam(i){
   const t=S.teams[i];
   return `<h2><span class="tname" style="${tc(i)}">${esc(t.name)}</span> · แก้ไขกระเป๋า</h2>
@@ -793,7 +809,8 @@ function renderTeams(){
 }
 function renderModal(){
   const m=$('#modal');let html='',lock=false;
-  if(S.auction&&S.auction.co){html=mCheckout();lock=true;}
+  if(UI.modal&&UI.modal.type==='reset')html=mReset();
+  else if(S.auction&&S.auction.co){html=mCheckout();lock=true;}
   else if(UI.modal&&UI.modal.type==='rules')html=mRules(UI.modal.k);
   else if(UI.modal&&UI.modal.type==='team')html=mTeam(UI.modal.t);
   if(!html){m.hidden=true;m.innerHTML='';m.dataset.lock='';return;}
@@ -857,6 +874,7 @@ const A={
   rules:b=>{UI.modal={type:'rules',k:b.dataset.k};renderModal();},
   team:(b,t)=>{UI.modal={type:'team',t};renderModal();},
   close:()=>{UI.modal=null;renderModal();},
+  'reset-open':()=>{UI.modal={type:'reset'};renderModal();},
   'te-del':b=>{const t=+b.dataset.t,tm=S.teams[t];tm.wallet=tm.wallet.filter(w=>w.uid!==b.dataset.uid);save();renderTeams();renderModal();},
   'te-add':b=>{const t=+b.dataset.t,code=$('#te-add').value;S.teams[t].wallet.push({uid:'v'+(S.seq++),code,from:'ครู',used:null});save();renderTeams();renderModal();},
   sound:()=>{S.sound=!S.sound;save();$('#snd').textContent=S.sound?'เสียง เปิด':'เสียง ปิด';if(S.sound)SFX.bid();},
@@ -892,8 +910,9 @@ const A={
   'q-del':b=>{const id=b.dataset.q;S.questions=S.questions.filter(q=>q.id!==id);delete S.qDone[id];delete S.qLocked[id];save();render();},
   confirm:b=>{if(b.dataset.armed){A[b.dataset.do]();return;}b.dataset.armed='1';const old=b.textContent;b.textContent='กดอีกครั้งเพื่อยืนยัน';b.classList.add('armed');
     setTimeout(()=>{if(b.isConnected){delete b.dataset.armed;b.textContent=old;b.classList.remove('armed');}},3500);},
-  newgame:()=>{S.teams.forEach(t=>{t.budget=S.settings.budget;t.wallet=[];t.basket=[];});S.qDone={};S.qLocked={};S.lotDone={};S.auction=null;S.curQ=null;S.view='home';UI.modal=null;tStop();save();render();toast('เริ่มเกมใหม่แล้ว');},
-  factory:()=>{const snd=S.sound;S=freshState();S.sound=snd;UI.modal=null;UI.openQ=null;tStop();save();render();toast('คืนค่าเริ่มต้นแล้ว');},
+  newgame:()=>{S.teams.forEach(t=>{t.budget=S.settings.budget;t.wallet=[];t.basket=[];});S.qDone={};S.qLocked={};S.lotDone={};S.auction=null;S.curQ=null;S.view='home';
+    UI.modal=null;UI.cover=false;UI.revealed=false;cancelCount();tStop();save();render();$('#view').scrollTop=0;toast('เริ่มเกมใหม่แล้ว ทุกทีมมี ฿'+money(S.settings.budget));},
+  factory:()=>{const snd=S.sound;S=freshState();S.sound=snd;UI.modal=null;UI.openQ=null;UI.cover=false;UI.revealed=false;cancelCount();tStop();save();render();$('#view').scrollTop=0;toast('ล้างทุกอย่างแล้ว');},
 };
 
 document.addEventListener('click',e=>{
