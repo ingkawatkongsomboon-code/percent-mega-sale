@@ -1,0 +1,949 @@
+<!doctype html>
+<html lang="th">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ร้อยละ MEGA SALE</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;500;600;700&family=Itim&family=Kanit:ital,wght@0,500;0,700;0,800;1,700;1,800&display=swap">
+<style>
+/* Layout: ใบปลิวโปรห้างบนจอโปรเจกเตอร์ — ทุกขนาดอิงความกว้าง/สูงของจอ (rem โตตามจอ) หน้าเกมพอดีหนึ่งจอไม่ต้องเลื่อน
+   แถบหัวแดง · เวทีกลาง · แถบเคาน์เตอร์คิดเงิน 3 ทีมติดล่าง
+   Theme: ตั้งใจใช้โลกเดียว (ใบปลิวกระดาษเหลือง หมึกดำ ป้ายแดง) เพื่อให้อ่านชัดบนโปรเจกเตอร์ทุกห้อง */
+:root{
+  --paper:#FFF3C4; --paper-2:#F6E29A; --card:#FFFFFF; --ink:#1E1A24; --ink-2:#5C5664; --rule:#E2CF85;
+  --sale:#DA2230; --sale-2:#A3101B; --burst:#FFD12E; --on-sale:#FFFFFF; --scrim:rgba(30,26,36,.62);
+  --ok:#13804A; --no:#C2361E;
+  --t0:#1B76CF; --t1:#14905A; --t2:#8338C9;
+  --v-p10:#FFB21E; --v-p20:#EE6A1C; --v-p30:#DA2230; --v-f50:#1E1A24; --v-x10:#0B7C78; --v-cb20:#BF1E5E;
+  --f-display:"Kanit","Leelawadee UI","Tahoma",sans-serif;
+  --f-hand:"Itim","Leelawadee UI","Tahoma",sans-serif;
+  --f-body:"Anuphan","Leelawadee UI","Tahoma",sans-serif;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+/* 1rem โตตามจอ: 1366×768 ≈ 18px · 1920×1080 ≈ 25px · ไม่ต่ำกว่า 15px */
+html{font-size:max(15px,min(1.32vw,2.35vh));-webkit-text-size-adjust:100%}
+html,body{height:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--sale)}
+h1,h2,h3{font-family:var(--f-display);line-height:1.25;margin:0;text-wrap:balance}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--card);border:2px solid var(--ink);border-radius:8px;padding:.3rem .5rem;min-width:0;width:100%}
+input[type=checkbox]{width:auto}
+textarea{resize:vertical}
+:focus-visible{outline:3px solid var(--t0);outline-offset:2px}
+
+.app{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto;height:100%}
+.top{display:flex;align-items:center;gap:.4rem 1rem;flex-wrap:wrap;background:var(--sale);color:var(--on-sale);border-bottom:.2rem solid var(--ink);padding-block:.3rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.logo{background:none;border:0;padding:0;font-family:var(--f-display);font-weight:800;font-style:italic;font-size:1.3rem;color:var(--on-sale);white-space:nowrap;line-height:1.25}
+.logo span{color:var(--burst)}
+.nav{display:flex;gap:.25rem;flex:1 1 auto;min-width:0;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav button{background:transparent;border:2px solid transparent;color:var(--on-sale);border-radius:999px;padding:.05rem .75rem;font-weight:600;white-space:nowrap;font-size:.95rem}
+.nav button:hover{border-color:var(--on-sale)}
+.nav button[aria-current="page"]{background:var(--burst);color:var(--ink);border-color:var(--ink)}
+.tools{display:flex;gap:.3rem}
+.tool{background:var(--sale-2);border:2px solid var(--ink);color:var(--on-sale);border-radius:8px;padding:.05rem .6rem;font-size:.8rem;font-weight:600;white-space:nowrap}
+#view{overflow:auto;min-height:0;padding-block:.75rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:110rem;margin-inline:auto}
+.fit{height:100%;min-height:0;display:grid;gap:.75rem}
+.eyebrow{font-family:var(--f-hand);font-size:1.15rem;color:var(--sale);letter-spacing:.02em;line-height:1.3}
+.muted{color:var(--ink-2)}
+.row{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.row.end{justify-content:flex-end}
+
+.btn{border:.17rem solid var(--ink);background:var(--card);border-radius:.6rem;padding:.3rem .85rem;font-weight:700;line-height:1.3;box-shadow:.17rem .17rem 0 var(--ink);transition:transform .08s,box-shadow .08s;white-space:nowrap}
+.btn:hover:not(:disabled){transform:translate(-1px,-1px);box-shadow:.25rem .25rem 0 var(--ink)}
+.btn:active:not(:disabled){transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.btn.primary{background:var(--sale);color:var(--on-sale)}
+.btn.yellow{background:var(--burst)}
+.btn.ghost{box-shadow:none;background:transparent}
+.btn.sm{font-size:.85rem;padding:.15rem .55rem;border-width:2px;box-shadow:2px 2px 0 var(--ink)}
+.btn.sm.ghost{box-shadow:none}
+.btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+.btn.armed{background:var(--sale);color:var(--on-sale)}
+
+/* รูปสินค้า: ภาพจริงแบบไม่ตัดขอบ + พื้นหลังเบลอจากภาพเดียวกัน */
+.ph{position:relative;overflow:hidden;border:.22rem solid var(--ink);border-radius:1rem;background:var(--card);min-height:0;min-width:0}
+.ph img{position:absolute;inset:0;width:100%;height:100%;display:block}
+.ph .bg{object-fit:cover;filter:blur(14px) saturate(1.15);transform:scale(1.2);opacity:.45}
+.ph .fg{object-fit:contain}
+.ph .emo{position:absolute;inset:0;display:grid;place-items:center;background:var(--burst);font-size:min(8rem,40%)}
+.th{display:inline-block;flex:none;width:2.6rem;height:2.6rem;border-radius:.45rem;overflow:hidden;border:.12rem solid var(--ink);background:var(--card);vertical-align:middle;position:relative}
+.th img{width:100%;height:100%;object-fit:cover;display:block}
+.th .emo{display:grid;place-items:center;width:100%;height:100%;background:var(--burst);font-size:1.4rem}
+
+/* แถบเคาน์เตอร์ของ 3 ทีม */
+.regs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem;background:var(--ink);padding-block:.45rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.reg{display:flex;background:var(--card);border-radius:.6rem;overflow:hidden;min-width:0}
+.reg-name{flex:none;max-width:40%;background:var(--tc);color:var(--on-sale);border:0;font-family:var(--f-display);font-weight:800;font-size:1.45rem;padding:.2rem .8rem;text-align:left;line-height:1.15}
+.reg-name:hover{filter:brightness(1.1)}
+.reg-body{display:flex;flex-wrap:wrap;align-items:center;gap:.2rem .6rem;padding:.25rem .6rem;min-width:0;flex:1}
+.reg-cash{font-family:var(--f-display);font-weight:800;font-size:2rem;font-variant-numeric:tabular-nums;line-height:1.1}
+.reg-wallet{display:flex;flex-wrap:wrap;gap:.25rem}
+.reg-wallet .muted{font-size:.85rem}
+.reg-basket{display:flex;gap:.2rem}
+.reg-basket .th{width:1.9rem;height:1.9rem;border-width:.1rem}
+
+/* คูปอง */
+.chip{display:inline-block;background:var(--vc);color:var(--vt);font-family:var(--f-display);font-weight:700;font-size:1rem;line-height:1;padding:.32rem .5rem .32rem .55rem;border-radius:.3rem;border-left:3px dotted var(--card);white-space:nowrap}
+.coupon{--notch:var(--paper);display:grid;grid-template-columns:auto minmax(0,1fr);background:var(--card);color:var(--ink);border:2px solid var(--vc);border-radius:.6rem;position:relative;text-align:left;min-width:0}
+.coupon::before,.coupon::after{content:"";position:absolute;top:50%;width:.8rem;height:.8rem;margin-top:-.4rem;border-radius:50%;background:var(--notch);border:2px solid var(--vc)}
+.coupon::before{left:-.45rem;clip-path:inset(0 0 0 50%)}
+.coupon::after{right:-.45rem;clip-path:inset(0 50% 0 0)}
+.c-stub{background:var(--vc);color:var(--vt);display:grid;place-content:center;justify-items:center;text-align:center;padding:.4rem .85rem .4rem .95rem;border-radius:.45rem 0 0 .45rem;border-right:2px dashed var(--card);min-width:5rem}
+.c-stub small{font-size:.72rem;font-weight:600;line-height:1.2}
+.c-stub b{font-family:var(--f-display);font-weight:800;font-style:italic;font-size:1.65rem;line-height:1.05}
+.c-body{display:grid;align-content:center;gap:.1rem;padding:.35rem .95rem .35rem .65rem;min-width:0}
+.c-body b{font-family:var(--f-display);font-weight:700;font-size:1rem;line-height:1.25}
+.c-body span{font-size:.78rem;color:var(--ink-2);line-height:1.35}
+.coupon.sm .c-stub{min-width:3.6rem;padding:.2rem .55rem .2rem .7rem}
+.coupon.sm .c-stub small{display:none}
+.coupon.sm .c-stub b{font-size:1.15rem}
+.coupon.sm .c-body{padding:.2rem .8rem .2rem .5rem}
+.coupon.sm .c-body b{font-size:.9rem}
+.coupon.sm .c-body span{display:none}
+.box .coupon,.qcard .coupon,.sheet .coupon{--notch:var(--card)}
+
+/* หน้าแรก */
+.home{align-content:center;gap:1.4rem}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:1.5rem}
+.hero h1{font-weight:800;font-size:5.6rem;line-height:1.02}
+.hero h1 em{font-style:italic;color:var(--sale)}
+.lead{font-size:1.5rem;max-width:32ch;margin-top:.6rem}
+.burst-wrap{filter:drop-shadow(.3rem .3rem 0 var(--ink))}
+.burst{width:15rem;max-width:100%;aspect-ratio:1;background:var(--burst);clip-path:var(--burst-poly,none);display:grid;place-content:center;justify-items:center;color:var(--sale);transform:rotate(-8deg);animation:pop .7s cubic-bezier(.2,1.6,.4,1) both}
+.burst span{font-family:var(--f-hand);font-size:1.6rem;color:var(--ink);line-height:1.2}
+.burst b{font-family:var(--f-display);font-weight:800;font-style:italic;font-size:4.6rem;line-height:1}
+@keyframes pop{from{transform:rotate(-40deg) scale(.5)}to{transform:rotate(-8deg) scale(1)}}
+.acts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.2rem}
+.act{display:grid;gap:.25rem;align-content:start;text-align:left;background:var(--card);border:.22rem solid var(--ink);border-radius:1rem;padding:1rem 1.3rem;box-shadow:.35rem .35rem 0 var(--ink);transition:transform .1s,box-shadow .1s}
+.act:hover{transform:translate(-2px,-2px);box-shadow:.5rem .5rem 0 var(--ink)}
+.act-k{font-family:var(--f-hand);color:var(--sale);font-size:1.2rem}
+.act b{font-family:var(--f-display);font-weight:800;font-size:2.3rem;line-height:1.15}
+.act>span:not(.act-k):not(.prog){font-size:1.1rem}
+.act .prog{justify-self:start;margin-top:.3rem;background:var(--ink);color:var(--burst);font-weight:700;border-radius:999px;padding:.05rem .8rem;font-size:1rem}
+.home-links{display:flex;flex-wrap:wrap;gap:.6rem}
+
+.vhead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:.6rem}
+.vhead h2{font-size:2.3rem;font-weight:800;line-height:1.15}
+.vhead-tools{display:flex;gap:.5rem;flex-wrap:wrap}
+
+/* กระดานกิจกรรม 1 */
+.boardv{grid-template-rows:auto minmax(0,1fr)}
+.board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem;min-height:0}
+.col{display:grid;grid-template-rows:auto;grid-auto-rows:minmax(0,1fr);gap:.65rem;min-height:0}
+.col-head{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;font-family:var(--f-display);font-weight:700;font-size:1.5rem;padding-bottom:.3rem;border-bottom:.18rem solid var(--ink);line-height:1.25}
+.stars{color:var(--sale);letter-spacing:.05em}
+.col-rw{font-size:1rem;font-family:var(--f-hand);color:var(--ink-2);font-weight:400}
+.tile{position:relative;display:flex;align-items:center;gap:.9rem;min-height:0;overflow:hidden;text-align:left;background:var(--card);border:.2rem solid var(--ink);border-radius:.8rem;padding:.45rem;box-shadow:.25rem .25rem 0 var(--ink);transition:transform .1s,box-shadow .1s}
+.tile:hover{transform:translate(-2px,-2px);box-shadow:.35rem .35rem 0 var(--ink)}
+.tile .ph{flex:none;height:100%;width:auto;aspect-ratio:1;max-width:55%;border-width:.14rem;border-radius:.55rem}
+.t-no{font-family:var(--f-display);font-weight:800;font-size:2.2rem;line-height:1.1}
+.tile>.chip{position:absolute;top:.35rem;right:.4rem}
+.tile.done{background:var(--paper-2);border-style:dashed;box-shadow:none}
+.tile.done .ph{opacity:.35}
+.stamp{position:absolute;right:.5rem;top:50%;transform:translateY(-50%) rotate(-9deg);border:.2rem solid var(--tc);color:var(--tc);background:var(--card);font-family:var(--f-display);font-weight:800;font-size:1.15rem;padding:0 .5rem;border-radius:.4rem;white-space:nowrap;line-height:1.5}
+
+/* หน้าโจทย์ — โจทย์ใหญ่เต็มจอ */
+.qv{grid-template-rows:auto minmax(0,1fr) auto}
+.qv-top{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1rem}
+.tier{display:inline-flex;align-items:center;gap:.3rem;background:var(--ink);color:var(--burst);font-family:var(--f-display);font-weight:700;border-radius:999px;padding:.05rem 1rem;font-size:1.4rem;white-space:nowrap;line-height:1.5}
+.rw-line{display:flex;align-items:center;gap:.5rem;font-weight:600;font-size:1.1rem}
+.timer{display:flex;align-items:center;gap:.6rem;margin-left:auto}
+.ring{width:3rem;height:3rem;transform:rotate(-90deg);flex:none}
+.ring circle{fill:none;stroke-width:12}
+.ring-bg{stroke:var(--paper-2)}
+.ring-fg{stroke:var(--ink);stroke-dasharray:100;stroke-dashoffset:0;stroke-linecap:round;transition:stroke-dashoffset .2s linear}
+.tm{font-family:var(--f-display);font-weight:800;font-size:2.6rem;line-height:1.05;font-variant-numeric:tabular-nums;min-width:4.6ch}
+.timer.low .tm,.timer.over .tm{color:var(--sale)}
+.timer.low .ring-fg{stroke:var(--sale)}
+.timer.over{animation:shake .4s 2}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.qv-stage{display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1.38fr);gap:1.1rem;min-height:0}
+.qv-stage>.ph{border-width:.25rem;border-radius:1.2rem}
+.qcard{background:var(--card);border:.25rem solid var(--ink);border-radius:1.2rem;box-shadow:.4rem .4rem 0 var(--ink);padding:1rem 1.4rem;overflow:hidden;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:.4em;font-size:1rem}
+.qcard .item{font-family:var(--f-display);font-weight:700;font-size:2.2em;line-height:1.2}
+.qcard .tags{display:flex;flex-wrap:wrap;gap:.6em}
+.tag{display:grid;gap:.15em;align-content:start;padding:.35em .8em .45em;background:var(--paper);border:.16em dashed var(--ink);border-radius:.7em;min-width:0}
+.tag small{font-family:var(--f-hand);font-size:1.3em;color:var(--ink-2);line-height:1.2}
+.price{font-family:var(--f-display);font-weight:800;font-style:italic;font-size:5.2em;line-height:1.05;font-variant-numeric:tabular-nums}
+.badge{justify-self:start;background:var(--sale);color:var(--burst);font-family:var(--f-display);font-weight:700;font-size:1.9em;padding:0 .5em;border-radius:.2em;transform:skewX(-8deg);line-height:1.45}
+.q-text{font-weight:700;font-size:3.8em;line-height:1.28}
+.choices{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.45em;font-size:2.2em}
+.choices li{display:flex;align-items:center;gap:.45em;border:.1em solid var(--ink);border-radius:.45em;padding:.2em .5em;font-weight:600;background:var(--card);min-width:0;line-height:1.3}
+.choices li b{flex:none;width:1.5em;height:1.5em;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:var(--burst);font-family:var(--f-display)}
+.choices li.correct{background:var(--ok);border-color:var(--ok);color:var(--on-sale)}
+.choices li.correct b{background:var(--on-sale);color:var(--ok)}
+.sol-q{font-size:1.35em;color:var(--ink-2);font-weight:600;line-height:1.35}
+.sol-k{justify-self:start;align-self:flex-start;background:var(--ink);color:var(--burst);font-family:var(--f-display);font-weight:700;font-size:1.2em;padding:0 .7em;border-radius:999px}
+.ans{font-family:var(--f-display);font-weight:800;font-size:4.2em;line-height:1.15;color:var(--sale)}
+.steps-l{margin:0;padding-left:1.3em;display:grid;gap:.15em;font-size:2em;line-height:1.35}
+.qv-ctrl{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem}
+.qv-ctrl .grow{flex:1}
+.jt{display:flex;align-items:center;gap:.3rem;background:var(--tc);color:var(--on-sale);border:.17rem solid var(--ink);border-radius:.7rem;padding:.2rem .25rem .2rem .7rem}
+.jt-n{font-family:var(--f-display);font-weight:700;font-size:1.2rem;line-height:1.2;margin-right:.2rem;white-space:nowrap}
+.jt-n small{font-family:var(--f-body);font-size:.75rem;background:var(--card);color:var(--ink);border-radius:4px;padding:0 .3rem;vertical-align:middle}
+.jb{border:2px solid var(--ink);background:var(--card);border-radius:.45rem;padding:.1rem .7rem;font-weight:800;font-size:1rem}
+.jb.ok{color:var(--ok)}
+.jb.no{color:var(--no)}
+.jb:disabled{opacity:.45;cursor:not-allowed}
+.jt.locked{filter:grayscale(.85);opacity:.6}
+.jt.won{box-shadow:0 0 0 .25rem var(--burst)}
+.note{font-weight:700;color:var(--sale);font-size:1.1rem}
+
+/* หน้าคั่นก่อนเปิดโจทย์: ซ่อนโจทย์ไว้จนครูกด "เริ่ม!" */
+.cover{grid-template-rows:auto minmax(0,1fr)}
+.cover-card{position:relative;overflow:hidden;isolation:isolate;background:var(--sale);color:var(--on-sale);border:.25rem solid var(--ink);border-radius:1.4rem;box-shadow:.45rem .45rem 0 var(--ink);display:grid;place-content:center;justify-items:center;gap:.5rem;text-align:center;padding:1.5rem;min-height:0}
+.cover-card::before{content:"";position:absolute;inset:-60%;z-index:-1;background:repeating-conic-gradient(from 0deg,var(--sale) 0 9deg,var(--sale-2) 9deg 18deg);opacity:.6;animation:spin 50s linear infinite}
+@keyframes spin{to{transform:rotate(1turn)}}
+.cover-k{font-family:var(--f-hand);font-size:1.9rem;color:var(--burst);line-height:1.25}
+.cover-no{font-family:var(--f-display);font-weight:800;font-style:italic;font-size:9.5rem;line-height:1.05;color:var(--burst);text-shadow:.35rem .35rem 0 var(--ink)}
+.cover-tier{font-family:var(--f-display);font-weight:700;font-size:2.3rem;line-height:1.2}
+.cover-meta{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.5rem 1.4rem;font-size:1.5rem;font-weight:600}
+.cover-meta .coupon{--notch:var(--sale);font-size:1.2rem}
+.go{font-family:var(--f-display);font-size:2.8rem;font-weight:800;line-height:1.3;background:var(--burst);color:var(--ink);border:.25rem solid var(--ink);border-radius:999px;padding:.15rem 3rem;box-shadow:.35rem .35rem 0 var(--ink);animation:pulse 1.4s ease-in-out infinite;margin-top:.5rem}
+.go:active{animation:none;transform:translate(3px,3px);box-shadow:none}
+@keyframes pulse{50%{transform:scale(1.07)}}
+.cover-hint{font-size:1.1rem;opacity:.92}
+.qv-stage.pop{animation:qpop .55s cubic-bezier(.2,1.5,.4,1) both}
+@keyframes qpop{from{transform:scale(.55) rotate(-2deg);opacity:.15}to{transform:none;opacity:1}}
+
+/* กิจกรรม 2 ประมูล */
+.av{grid-template-columns:minmax(12rem,15rem) minmax(0,1fr);grid-template-rows:minmax(0,1fr)}
+.lots{display:flex;flex-direction:column;gap:.4rem;overflow:auto;min-height:0;padding:0 .3rem .3rem 0}
+.lots-h{display:flex;justify-content:space-between;align-items:center;gap:.5rem}
+.lots-h h3{font-size:1.4rem}
+.lot-btn{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:.55rem;align-items:center;text-align:left;background:var(--card);border:.17rem solid var(--ink);border-radius:.7rem;padding:.3rem .5rem;flex:none}
+.lot-btn .th{grid-row:span 2}
+.lot-btn .ln{font-weight:700;line-height:1.25;font-size:.95rem}
+.lot-btn .ls{font-size:.85rem;color:var(--ink-2)}
+.lot-btn.on{background:var(--burst)}
+.lot-btn.sold{background:var(--paper-2);border-style:dashed}
+.lot-btn:disabled{cursor:default}
+.lot-btn:disabled:not(.sold):not(.on){opacity:.5}
+.sold-tag{background:var(--tc);color:var(--on-sale);border-radius:4px;padding:0 .35rem;font-weight:700}
+.stage{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:1.1rem;min-height:0}
+.stage-empty{background:var(--card);border:.22rem dashed var(--ink);border-radius:1.2rem;padding:2rem;display:grid;gap:.7rem;justify-items:start;align-content:center}
+.stage-empty h2{font-size:3rem;font-weight:800}
+.lot-card{background:var(--card);border:.25rem solid var(--ink);border-radius:1.2rem;box-shadow:.4rem .4rem 0 var(--ink);padding:.9rem;text-align:center;display:grid;grid-template-rows:auto minmax(0,1fr) auto auto;gap:.45rem;justify-items:center;min-height:0}
+.lot-card .ph{width:100%;height:100%;border-width:.15rem}
+.lot-no{font-family:var(--f-display);font-weight:800;letter-spacing:.08em;background:var(--ink);color:var(--burst);padding:0 .9rem;border-radius:.4rem;font-size:1.2rem}
+.lot-name{font-size:2.3rem;font-weight:800;line-height:1.15}
+.lot-meta{display:flex;flex-wrap:wrap;justify-content:center;gap:.2rem 1.2rem;font-family:var(--f-hand);font-size:1.35rem}
+.lot-meta b{font-family:var(--f-display);font-size:1.6rem}
+.bid-zone{display:flex;flex-direction:column;gap:.7rem;min-height:0;overflow:auto}
+.bid-now{position:relative;overflow:hidden;background:var(--ink);color:var(--paper);border-radius:1.2rem;padding:.7rem 1rem;display:grid;justify-items:center;gap:.15rem;border:.3rem solid var(--tc,var(--ink));flex:none}
+.bid-now small{font-family:var(--f-hand);font-size:1.3rem}
+.bid-num{font-family:var(--f-display);font-weight:800;font-style:italic;font-size:6.6rem;line-height:1.02;color:var(--burst);font-variant-numeric:tabular-nums}
+.bid-num.bump{animation:bump .3s}
+@keyframes bump{40%{transform:scale(1.12)}}
+.leader{background:var(--tc);color:var(--on-sale);border-radius:999px;padding:0 1rem;font-family:var(--f-display);font-weight:700;font-size:1.5rem}
+.leader.none{background:transparent;border:2px solid var(--paper);color:var(--paper)}
+.count{position:absolute;inset:0;border:0;background:var(--sale);color:var(--burst);font-family:var(--f-display);font-weight:800;font-size:6rem;display:grid;place-items:center;align-content:center;line-height:1.1}
+.count small{display:block;font-family:var(--f-body);font-size:1rem;color:var(--on-sale);font-weight:500}
+.steps{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;font-weight:600;font-size:1.05rem}
+.step{border:2px solid var(--ink);background:var(--card);border-radius:999px;padding:0 .75rem;font-weight:700}
+.step.on{background:var(--ink);color:var(--burst)}
+.bidders{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem;flex:none}
+.bidder{display:grid;justify-items:center;gap:0;background:var(--tc);color:var(--on-sale);border:.17rem solid var(--ink);border-radius:.9rem;padding:.45rem .3rem;box-shadow:.25rem .25rem 0 var(--ink);transition:transform .08s,box-shadow .08s;min-width:0}
+.bidder span{font-weight:700;font-size:1.15rem}
+.bidder b{font-family:var(--f-display);font-weight:800;font-size:2rem;line-height:1.15}
+.bidder small{font-size:.9rem;opacity:.92}
+.bidder:active:not(:disabled){transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.bidder:disabled{filter:grayscale(.7);opacity:.55;cursor:not-allowed;box-shadow:none}
+.btn.hammer{background:var(--ink);color:var(--burst);font-size:1.3rem}
+.bid-log{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.3rem .9rem;font-size:1rem;color:var(--ink-2)}
+.bid-log li{display:flex;align-items:center;gap:.3rem}
+.bid-log i{width:.6rem;height:.6rem;border-radius:50%;background:var(--tc)}
+.bid-log li:first-child{color:var(--ink);font-weight:700}
+
+/* หน้าต่างลอย */
+.modal{position:fixed;inset:0;z-index:50;background:var(--scrim);display:grid;place-items:center;overflow:auto;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.sheet{position:relative;width:min(62rem,100%);background:var(--card);border:.25rem solid var(--ink);border-radius:1.2rem;box-shadow:.6rem .6rem 0 var(--ink);padding:1.3rem 1.5rem;display:grid;gap:.9rem;font-size:1.1rem}
+.sheet h2{font-size:2.3rem;font-weight:800;padding-right:2rem;line-height:1.15}
+.sheet h3{font-size:1.5rem}
+.x{position:absolute;top:.4rem;right:.6rem;border:0;background:none;font-size:2.2rem;line-height:1;color:var(--ink-2);padding:.2rem .4rem}
+.sold-row{display:flex;align-items:center;gap:1.1rem;flex-wrap:wrap}
+.sold-row .th{width:4.5rem;height:4.5rem;border-width:.17rem;border-radius:.7rem}
+.stamp.big{position:static;transform:rotate(-8deg);font-size:1.8rem;padding:0 .8rem;border-width:.25rem}
+.tname{color:var(--tc)}
+.wallet-pick{display:flex;flex-wrap:wrap;gap:.8rem}
+.pickc{display:grid;gap:.2rem;background:transparent;border:.2rem solid transparent;border-radius:.9rem;padding:.3rem .55rem;text-align:left}
+.pickc[aria-pressed="true"]{border-color:var(--ink);background:var(--burst)}
+.pickc[aria-pressed="true"] .coupon{--notch:var(--burst)}
+.pickc .coupon{font-size:1.2rem}
+.pickc:disabled{opacity:.45;cursor:not-allowed}
+.why{color:var(--no);font-weight:600}
+.hint{color:var(--ink-2)}
+.big{font-size:1.3rem}
+.calc-q{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem;font-weight:700;font-size:1.3rem}
+.cq-price{font-family:var(--f-display);font-style:italic;font-weight:800;font-size:3.6rem;line-height:1.1}
+.sheet .timer{margin-left:0}
+.sheet .timer .tm{font-size:4rem}
+.sheet .timer .ring{width:4.4rem;height:4.4rem}
+.co-sol{display:grid;gap:.3rem;background:var(--paper);border-radius:1rem;padding:.8rem 1.1rem;font-size:1rem}
+.co-sol .steps-l{font-size:1.6rem}
+.co-sol .ans{font-size:3rem}
+.rules{margin:0;padding-left:2.2rem;display:grid;gap:.45rem;font-size:1.9rem;line-height:1.4}
+.rules b{color:var(--sale)}
+.rule-coupons{display:flex;flex-wrap:wrap;gap:1rem}
+.rule-coupons>div{display:grid;gap:.2rem;justify-items:start}
+.rule-coupons small{font-weight:600;color:var(--ink-2)}
+.te-wallet{display:grid;gap:.5rem}
+.te-w{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
+.te-w.used .coupon{opacity:.45}
+.toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 3.6rem);transform:translateX(-50%);z-index:80;background:var(--ink);color:var(--paper);border:.2rem solid var(--burst);border-radius:1rem;padding:.6rem 1.1rem;display:flex;align-items:center;gap:.9rem;font-size:1.45rem;box-shadow:.4rem .4rem 0 var(--sale);animation:tin .35s cubic-bezier(.2,1.4,.4,1);width:max-content;max-width:calc(100% - 32px);transition:opacity .4s,transform .4s}
+.toast .coupon{--notch:var(--ink)}
+.toast.out{opacity:0;transform:translate(-50%,-12px)}
+@keyframes tin{from{transform:translate(-50%,-20px) scale(.9)}}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:90;overflow:hidden}
+.confetti i{position:absolute;top:-16px;width:.65rem;height:.95rem;border-radius:2px;animation:fall 1.9s cubic-bezier(.3,.6,.6,1) forwards}
+@keyframes fall{to{transform:translate(var(--dx),105vh) rotate(var(--r))}}
+
+/* สรุปผล */
+.receipts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.3rem;align-items:start;margin-top:.8rem}
+.receipt{background:var(--card);padding:1.1rem 1.2rem 1.8rem;display:grid;gap:.7rem;font-variant-numeric:tabular-nums;min-width:0;font-size:1.15rem;
+  -webkit-mask:linear-gradient(#000 0 0) top/100% calc(100% - 12px) no-repeat,conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/24px 12px repeat-x;
+  mask:linear-gradient(#000 0 0) top/100% calc(100% - 12px) no-repeat,conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/24px 12px repeat-x}
+.receipt header{display:grid;justify-items:center;gap:.1rem;border-bottom:2px dashed var(--ink);padding-bottom:.5rem;text-align:center}
+.rc-team{font-family:var(--f-display);font-weight:800;font-size:2rem;color:var(--tc);line-height:1.2}
+.best-tag{background:var(--sale);color:var(--burst);font-family:var(--f-display);font-weight:700;border-radius:999px;padding:0 .8rem;font-size:1.05rem}
+.rl{display:flex;justify-content:space-between;align-items:center;gap:.6rem;padding:.1rem 0}
+.rl>span:first-child{display:flex;align-items:center;gap:.4rem;min-width:0}
+.rl .th{width:1.8rem;height:1.8rem}
+.rl span:last-child{white-space:nowrap}
+.rl s{color:var(--ink-2)}
+.rc-sum{border-top:2px dashed var(--ink);padding-top:.4rem}
+.rl.strong{font-weight:800;font-size:1.3rem}
+.rc-pct{display:grid;justify-items:center;background:var(--paper);border-radius:.8rem;padding:.5rem;text-align:center}
+.rc-pct b{font-family:var(--f-display);font-weight:800;font-style:italic;font-size:3.4rem;line-height:1.1;color:var(--sale)}
+.rc-left{display:flex;flex-wrap:wrap;gap:.3rem;justify-content:center;align-items:center}
+.barcode{display:grid;justify-items:center;gap:.1rem}
+.bars{display:flex;height:2.2rem}
+.bars i{display:block;background:var(--ink)}
+.bars i.g{background:transparent}
+.barcode small{letter-spacing:.3em;font-size:.75rem}
+.think{margin-top:1.3rem;background:var(--card);border:.2rem solid var(--ink);border-radius:1rem;padding:1rem 1.3rem;display:grid;gap:.5rem}
+.think-q{font-family:var(--f-display);font-weight:700;font-size:1.9rem;line-height:1.35}
+.think summary{cursor:pointer;font-weight:700;color:var(--sale);font-size:1.2rem}
+.think ol{margin:.4rem 0 0;padding-left:1.4rem;font-size:1.5rem}
+
+/* ตั้งค่า + คู่มือ (หน้าสำหรับครู เลื่อนอ่านได้) */
+.set-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:1.1rem;align-items:start}
+.box{background:var(--card);border:.17rem solid var(--ink);border-radius:1rem;padding:.9rem 1.1rem 1.1rem;display:grid;gap:.65rem;margin:0;min-width:0}
+.box legend{font-family:var(--f-display);font-weight:700;font-size:1.25rem;padding:0 .4rem}
+.box h3{font-size:1.35rem}
+.box ul{margin:0;padding-left:1.2rem;display:grid;gap:.3rem}
+.setup{display:grid;gap:1.1rem}
+.fld{display:grid;gap:.15rem;font-weight:600;font-size:.9rem;min-width:0}
+.fld>span{display:flex;align-items:center;gap:.4rem}
+.dot{width:.8rem;height:.8rem;border-radius:50%;background:var(--tc);display:inline-block}
+.lot-rows,.q-rows{display:grid;gap:.55rem}
+.lot-row{display:grid;grid-template-columns:auto minmax(7rem,1fr) 5rem 5rem auto auto;gap:.4rem;align-items:end}
+.mini{display:grid;font-size:.75rem;font-weight:600;color:var(--ink-2)}
+.mini.chk{display:flex;align-items:center;gap:.3rem;padding-bottom:.4rem}
+.imgpick{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
+.imgpick .th{width:3.2rem;height:3.2rem}
+.upl{position:relative;overflow:hidden}
+.upl input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%}
+.qe{border:2px solid var(--ink);border-radius:.8rem;background:var(--paper)}
+.qe summary{display:flex;flex-wrap:wrap;gap:.3rem .8rem;align-items:center;padding:.4rem .7rem;cursor:pointer}
+.qe summary .tier{font-size:.95rem}
+.qe summary .muted{flex:1 1 12rem;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.qe-body{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.55rem;padding:.2rem .7rem .7rem}
+.qe-body .wide{grid-column:1/-1}
+.box.danger{border-style:dashed}
+
+/* จอแคบ (มือถือ / หน้าต่างเล็ก): เลิกบังคับพอดีจอ แล้วเรียงเป็นแนวตั้ง */
+@media (max-width:1100px){.stage{grid-template-columns:1fr}.lot-card .ph{height:16rem}}
+@media (max-width:860px){
+  .fit{height:auto}
+  .board{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .col{grid-auto-rows:auto}
+  .tile .ph{height:5.5rem}
+  .qv-stage,.av,.set-grid,.receipts{grid-template-columns:1fr}
+  .qv-stage>.ph{height:15rem}
+  .qcard{overflow:visible}
+  .lots{overflow:visible}
+  .acts,.hero{grid-template-columns:1fr}
+  .hero h1{font-size:3.6rem}
+  .burst-wrap{justify-self:end;margin-top:-1rem}
+  .burst{width:10rem}
+  .timer{margin-left:0}
+  .cover-card{min-height:24rem}
+  .cover-no{font-size:5.5rem}
+}
+@media (max-width:640px){
+  .regs{gap:.35rem}
+  .reg{flex-direction:column}
+  .reg-name{max-width:none;font-size:1rem}
+  .reg-cash{font-size:1.2rem}
+  .lot-row{grid-template-columns:auto minmax(0,1fr) 4.6rem}
+  .qe-body{grid-template-columns:1fr}
+  .bidders{grid-template-columns:1fr}
+  .choices{grid-template-columns:1fr}
+  .board{grid-template-columns:1fr}
+  .qcard{font-size:.8rem}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+
+<div class="app" id="app">
+  <header class="top">
+    <button class="logo" data-go="home" aria-label="หน้าแรก">ร้อยละ <span>MEGA SALE</span></button>
+    <nav class="nav" id="nav" aria-label="เมนู">
+      <button data-go="home">หน้าแรก</button>
+      <button data-go="a1">กิจกรรม 1 ชิงคูปอง</button>
+      <button data-go="a2">กิจกรรม 2 ประมูลขนม</button>
+      <button data-go="results">สรุปผล</button>
+      <button data-go="setup">ตั้งค่า</button>
+    </nav>
+    <div class="tools">
+      <button class="tool" data-act="sound" id="snd">เสียง เปิด</button>
+      <button class="tool" data-act="full">เต็มจอ</button>
+    </div>
+  </header>
+  <main id="view"></main>
+  <footer class="regs" id="regs" aria-label="กระเป๋าเงินของแต่ละทีม"></footer>
+</div>
+<div id="modal" class="modal" hidden></div>
+
+<script>
+(()=>{
+'use strict';
+const $=(s,r=document)=>r.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const clone=o=>JSON.parse(JSON.stringify(o));
+const r2=n=>Math.round((+n||0)*100)/100;
+const money=n=>{n=r2(n);return Number.isInteger(n)?n.toLocaleString('en-US'):n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});};
+const sum=a=>a.reduce((x,y)=>x+(+y||0),0);
+const LS='percent-mega-sale-v3';
+const TEAM_C=['--t0','--t1','--t2'];
+const tc=i=>`--tc:var(${TEAM_C[i]})`;
+const CH=['ก','ข','ค','ง'];
+
+/* ---------- คูปองและระดับข้อ ---------- */
+const VOUCHERS={
+  P10:{title:'ลด 10%',big:'10%',sub:'ส่วนลด',short:'10%',note:'ใช้กับขนมได้ทุกชิ้น',kind:'pct',pct:10,c:'--v-p10',fg:'--ink'},
+  P20:{title:'ลด 20%',big:'20%',sub:'ส่วนลด',short:'20%',note:'ใช้กับขนมได้ทุกชิ้น',kind:'pct',pct:20,c:'--v-p20',fg:'--on-sale'},
+  P30:{title:'ลด 30% สูงสุด ฿100',big:'30%',sub:'ส่วนลด',short:'30%',note:'ลดได้ไม่เกิน 100 บาท',kind:'pct',pct:30,cap:100,c:'--v-p30',fg:'--on-sale'},
+  F50:{title:'ลดทันที ฿50',big:'฿50',sub:'ส่วนลด',short:'฿50',note:'เมื่อราคาประมูลครบ 150 บาท',kind:'fixed',amt:50,min:150,c:'--v-f50',fg:'--burst'},
+  X10:{title:'ลดเพิ่ม 10%',big:'+10%',sub:'ลดซ้อน',short:'+10%',note:'ใช้ร่วมกับคูปองอื่นได้ ลดจากราคาที่ลดแล้ว',kind:'extra',pct:10,c:'--v-x10',fg:'--on-sale'},
+  CB20:{title:'เงินคืน 20%',big:'20%',sub:'เงินคืน',short:'คืน 20%',note:'จ่ายก่อน แล้วได้เงินคืนเข้ากระเป๋าทีม',kind:'cashback',pct:20,c:'--v-cb20',fg:'--on-sale'},
+};
+const TIERS={
+  1:{name:'ง่าย',stars:'★',reward:'P10',time:60},
+  2:{name:'กลาง',stars:'★★',reward:'P20',time:90},
+  3:{name:'ยาก',stars:'★★★',reward:'P30',time:120},
+  4:{name:'โบนัส',stars:'โบนัส',reward:null,time:30},
+};
+
+/* ---------- โจทย์ตั้งต้น (รูปถ่ายจริงอยู่ในโฟลเดอร์ img/) ---------- */
+const DQ=[
+ {id:'q1',tier:1,img:'img/q1.jpg',icon:'👕',item:'เสื้อยืด',tags:[{price:'฿900',badge:'ลด 20%'}],text:'ต้องจ่ายกี่บาท?',answer:'720 บาท',steps:['ส่วนลด = 900 × 20/100 = 180 บาท','ราคาที่จ่าย = 900 − 180 = 720 บาท']},
+ {id:'q2',tier:1,img:'img/q2.jpg',icon:'🧋',item:'ชานมไข่มุก',tags:[{price:'฿60',badge:'ลด 25%'}],text:'ต้องจ่ายกี่บาท?',answer:'45 บาท',steps:['ส่วนลด = 60 × 25/100 = 15 บาท','ราคาที่จ่าย = 60 − 15 = 45 บาท']},
+ {id:'q3',tier:1,img:'img/q3.jpg',icon:'🎒',item:'กระเป๋าเป้',tags:[{label:'ราคาเดิม',price:'฿1,500'},{label:'ราคาใหม่',price:'฿1,200',badge:'SALE'}],text:'ร้านลดราคากี่เปอร์เซ็นต์?',answer:'20%',steps:['ลดไป 1,500 − 1,200 = 300 บาท','300/1,500 × 100 = 20%']},
+ {id:'q4',tier:2,img:'img/q4.jpg',icon:'👟',item:'รองเท้า Nike',tags:[{price:'฿3,200',badge:'ลด 35%'}],text:'ต้องจ่ายกี่บาท?',answer:'2,080 บาท',steps:['ส่วนลด = 3,200 × 35/100 = 1,120 บาท','ราคาที่จ่าย = 3,200 − 1,120 = 2,080 บาท']},
+ {id:'q5',tier:2,img:'img/q5.jpg',icon:'🎮',item:'จอย PS5 รุ่นเดียวกัน 2 ร้าน',tags:[{label:'ร้าน A',price:'฿2,500',badge:'ลด 20%'},{label:'ร้าน B',price:'฿2,200',badge:'ลด 10%'}],text:'ร้านไหนถูกกว่า และถูกกว่ากี่บาท?',answer:'ร้าน B ถูกกว่า 20 บาท',steps:['ร้าน A: 2,500 − (2,500 × 20/100) = 2,500 − 500 = 2,000 บาท','ร้าน B: 2,200 − (2,200 × 10/100) = 2,200 − 220 = 1,980 บาท','2,000 − 1,980 = 20 บาท (ลดเยอะกว่า ไม่ได้ถูกกว่าเสมอ)']},
+ {id:'q6',tier:2,img:'img/q6.jpg',icon:'🎧',item:'หูฟังไร้สาย',tags:[{label:'ราคาหลังลด',price:'฿2,400',badge:'ลด 20%'}],text:'ราคาเดิมก่อนลดกี่บาท?',answer:'3,000 บาท',steps:['ลด 20% แปลว่าจ่าย 100% − 20% = 80% ของราคาเดิม','80% ของราคาเดิม = 2,400 บาท','ราคาเดิม = 2,400 × 100/80 = 3,000 บาท']},
+ {id:'q7',tier:3,img:'img/q7.jpg',icon:'👜',item:'กระเป๋าแบรนด์เนม',tags:[{price:'฿10,000',badge:'ลด 50% + ลดเพิ่ม 20%'}],text:'ต้องจ่ายกี่บาท และลดรวมกี่เปอร์เซ็นต์?',answer:'4,000 บาท · ลดรวม 60%',steps:['ลด 50%: 10,000 − 5,000 = 5,000 บาท','ลดเพิ่ม 20% ของ 5,000 = 1,000 บาท → 5,000 − 1,000 = 4,000 บาท','ลดรวม 6,000/10,000 × 100 = 60% (ไม่ใช่ 70%)']},
+ {id:'q8',tier:3,img:'img/q8.jpg',icon:'🍕',item:'พิซซ่า',tags:[{label:'ค่าอาหาร',price:'฿500',badge:'+ ค่าบริการ 10% + VAT 7%'}],text:'คิดค่าบริการก่อน แล้วคิด VAT จากยอดนั้น ต้องจ่ายทั้งหมดกี่บาท?',answer:'588.50 บาท',steps:['ค่าบริการ 10% = 50 บาท → 500 + 50 = 550 บาท','VAT 7% ของ 550 = 550 × 7/100 = 38.50 บาท','รวม 550 + 38.50 = 588.50 บาท']},
+ {id:'q9',tier:3,img:'img/q9.jpg',icon:'📱',item:'เคส iPhone',tags:[{label:'ราคาเดิม',price:'฿500',badge:'ขึ้นราคา 20% แล้วลด 20%'}],text:'ราคาตอนนี้กี่บาท ถูกหรือแพงกว่าเดิม?',answer:'480 บาท · ถูกกว่าเดิม 20 บาท',steps:['ขึ้นราคา 20%: 500 + 100 = 600 บาท','ลด 20% ของ 600 = 120 บาท → 600 − 120 = 480 บาท','ถูกกว่าเดิม 500 − 480 = 20 บาท (ไม่ได้กลับมาเท่าเดิม)']},
+ {id:'b1',tier:4,img:'img/b1.jpg',icon:'💯',item:'เครื่องหมาย %',tags:[],text:'เครื่องหมาย % มาจากภาษาอิตาลีว่า “per cento” แปลว่าอะไร?',choices:['ต่อสิบ','ต่อร้อย','ต่อพัน','ต่อล้าน'],correct:1,reward:'F50',answer:'ต่อร้อย',steps:['per = ต่อ, cento = ร้อย','30% จึงแปลว่า 30 ส่วนใน 100 ส่วน']},
+ {id:'b2',tier:4,img:'img/b2.jpg',icon:'🛍️',item:'เทศกาล 11.11',tags:[],text:'วันช้อปออนไลน์ 11.11 เริ่มมาจากวันอะไรในประเทศจีน?',choices:['วันแม่','วันเด็ก','วันตรุษจีน','วันคนโสด'],correct:3,reward:'X10',answer:'วันคนโสด',steps:['เลข 1 สี่ตัวเหมือนคนยืนคนเดียว','จึงเรียกว่าวันคนโสด แล้วกลายเป็นวันลดราคาใหญ่']},
+ {id:'b3',tier:4,img:'img/b3.jpg',icon:'🏷️',item:'Black Friday',tags:[],text:'Black Friday คือวันศุกร์ถัดจากวันหยุดใดของสหรัฐอเมริกา?',choices:['วันคริสต์มาส','วันฮาโลวีน','วันขอบคุณพระเจ้า','วันประกาศอิสรภาพ'],correct:2,reward:'CB20',answer:'วันขอบคุณพระเจ้า (Thanksgiving)',steps:['วันขอบคุณพระเจ้าตรงกับวันพฤหัสบดีที่ 4 ของเดือนพฤศจิกายน','ปี 2569 Black Friday ตรงกับวันที่ 27 พฤศจิกายน']},
+];
+const DL=[
+ {id:'l1',img:'img/l1.jpg',icon:'🥔',name:'เลย์ รสคลาสสิก',store:32,start:50,mystery:false},
+ {id:'l2',img:'img/l2.jpg',icon:'🍫',name:'คิทแคท',store:25,start:50,mystery:false},
+ {id:'l3',img:'img/l3.jpg',icon:'🍪',name:'โอรีโอ',store:45,start:50,mystery:false},
+ {id:'l4',img:'img/l4.jpg',icon:'🍬',name:'เยลลี่หมี ฮาริโบ้',store:35,start:40,mystery:false},
+ {id:'l5',img:'img/l5.jpg',icon:'🧃',name:'นมกล่อง แพ็ก 4',store:48,start:50,mystery:false},
+ {id:'l6',img:'img/l6.jpg',icon:'🎁',name:'กล่องสุ่มปริศนา',store:60,start:80,mystery:true},
+];
+const DEF_IMG=Object.fromEntries([...DQ,...DL].map(x=>[x.id,x.img]));
+const TEAM_NAMES=['ทีมฟ้า','ทีมเขียว','ทีมม่วง'];
+function freshState(){
+  return {v:3,settings:{budget:500,payTime:45,step:10},
+    teams:TEAM_NAMES.map(n=>({name:n,budget:500,wallet:[],basket:[]})),
+    questions:clone(DQ),lots:clone(DL),qDone:{},qLocked:{},lotDone:{},
+    view:'home',curQ:null,auction:null,seq:1,sound:true};
+}
+let S;
+const UI={modal:null,revealed:false,openQ:null,cover:false,pop:false};
+function save(){try{localStorage.setItem(LS,JSON.stringify(S));return true;}catch(e){return false;}}
+function load(){try{const s=JSON.parse(localStorage.getItem(LS)||'null');if(s&&s.v===3&&Array.isArray(s.teams))return s;}catch(e){}return null;}
+
+/* ---------- เสียง ---------- */
+let AC=null;
+function tone(f,d,type='sine',vol=.14,when=0){
+  if(!S||!S.sound)return;
+  try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();}catch(e){return;}
+  const t=AC.currentTime+when,o=AC.createOscillator(),g=AC.createGain();
+  o.type=type;o.frequency.value=f;g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+d);
+  o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+d+.03);
+}
+const SFX={
+  tick:()=>tone(880,.07,'square',.05),
+  end:()=>{tone(220,.55,'sawtooth',.12);tone(165,.6,'sawtooth',.1,.05);},
+  ok:()=>[523,659,784,1047].forEach((f,i)=>tone(f,.2,'triangle',.14,i*.09)),
+  no:()=>{tone(190,.22,'square',.09);tone(140,.3,'square',.09,.17);},
+  bid:()=>tone(700,.08,'triangle',.12),
+  bang:()=>{tone(95,.28,'square',.2);tone(55,.4,'sine',.3,.02);},
+  go:()=>{tone(523,.12,'triangle',.14);tone(784,.12,'triangle',.14,.1);tone(1047,.28,'triangle',.16,.2);},
+};
+
+/* ---------- ตัวช่วย ---------- */
+const curQ=()=>S.questions.find(q=>q.id===S.curQ);
+const getLot=id=>S.lots.find(l=>l.id===id);
+const rewardOf=q=>+q.tier===4?(VOUCHERS[q.reward]?q.reward:'F50'):TIERS[q.tier].reward;
+const walletItem=(t,uid)=>S.teams[t].wallet.find(w=>w.uid===uid);
+const orderedQ=()=>[1,2,3,4].flatMap(t=>S.questions.filter(q=>+q.tier===t));
+function qLabel(q){const o=orderedQ();if(+q.tier===4)return 'โบนัส '+(o.filter(x=>+x.tier===4).indexOf(q)+1);return 'ข้อ '+(o.filter(x=>+x.tier!==4).indexOf(q)+1);}
+function nextQ(q){const o=orderedQ(),i=o.indexOf(q);return o.slice(i+1).find(x=>!S.qDone[x.id])||o.find(x=>!S.qDone[x.id]&&x!==q)||null;}
+const vStyle=code=>{const v=VOUCHERS[code];return `--vc:var(${v.c});--vt:var(${v.fg})`;};
+const chip=code=>`<span class="chip" style="${vStyle(code)}" title="${esc(VOUCHERS[code].title)}">${VOUCHERS[code].short}</span>`;
+const coupon=(code,cls='')=>{const v=VOUCHERS[code];return `<div class="coupon ${cls}" style="${vStyle(code)}"><div class="c-stub"><small>${v.sub}</small><b>${v.big}</b></div><div class="c-body"><b>${v.title}</b><span>${v.note}</span></div></div>`;};
+const ringSVG=()=>`<svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><circle class="ring-bg" cx="50" cy="50" r="42"/><circle class="ring-fg" cx="50" cy="50" r="42" pathLength="100"/></svg>`;
+const photo=(src,alt,emo,cls='')=>src?`<div class="ph ${cls}"><img class="bg" src="${esc(src)}" alt="" aria-hidden="true"><img class="fg" src="${esc(src)}" alt="${esc(alt)}"></div>`:`<div class="ph ${cls}"><span class="emo" aria-hidden="true">${esc(emo||'🛍️')}</span></div>`;
+const thumb=(src,alt,emo)=>`<span class="th" title="${esc(alt)}">${src?`<img src="${esc(src)}" alt="${esc(alt)}">`:`<span class="emo" aria-hidden="true">${esc(emo||'🛍️')}</span>`}</span>`;
+function canUse(code,bid){const v=VOUCHERS[code];if(v.kind==='fixed'&&bid<v.min)return `ต้องประมูลครบ ฿${v.min}`;return '';}
+
+/* คิดราคาสุทธิจากราคาประมูลและคูปองที่เลือก */
+function calc(bid,codes){
+  const steps=[];let price=bid,cashback=0;
+  const main=codes.find(c=>VOUCHERS[c].kind!=='extra'),extra=codes.find(c=>VOUCHERS[c].kind==='extra');
+  if(main){const v=VOUCHERS[main];
+    if(v.kind==='pct'){let d=r2(bid*v.pct/100);
+      steps.push(`${v.pct}% ของ ${money(bid)} = ${money(bid)} × ${v.pct}/100 = ${money(d)} บาท`);
+      if(v.cap&&d>v.cap){steps.push(`เกินเพดาน จึงลดได้แค่ ${money(v.cap)} บาท`);d=v.cap;}
+      price=r2(bid-d);steps.push(`ราคาหลังลด = ${money(bid)} − ${money(d)} = ${money(price)} บาท`);
+    }else if(v.kind==='fixed'){price=r2(bid-v.amt);steps.push(`ลดทันที ${v.amt} บาท: ${money(bid)} − ${v.amt} = ${money(price)} บาท`);}
+  }
+  if(extra){const d=r2(price*10/100),np=r2(price-d);
+    steps.push(`ลดเพิ่ม 10% ของ ${money(price)} = ${money(d)} บาท`);
+    steps.push(`ราคาหลังลดเพิ่ม = ${money(price)} − ${money(d)} = ${money(np)} บาท`);price=np;}
+  if(main&&VOUCHERS[main].kind==='cashback'){cashback=r2(price*20/100);
+    steps.push(`จ่าย ${money(price)} บาท แล้วได้เงินคืน 20% = ${money(cashback)} บาท`);
+    steps.push(`จ่ายจริงสุทธิ = ${money(price)} − ${money(cashback)} = ${money(r2(price-cashback))} บาท`);}
+  if(!steps.length)steps.push('ไม่ใช้คูปอง จ่ายเต็มราคา');
+  const net=r2(price-cashback);
+  return {steps,net,saved:r2(bid-net)};
+}
+
+/* ย่อขนาดตัวอักษรในกล่องโจทย์จนพอดีกล่อง (จอเล็กหรือโจทย์ยาว) */
+function fitAll(){document.querySelectorAll('[data-fit]').forEach(box=>{box.style.fontSize='';let s=100;
+  while(box.scrollHeight>box.clientHeight+2&&s>40){s-=4;box.style.fontSize=s+'%';}});}
+let fitT=null;addEventListener('resize',()=>{clearTimeout(fitT);fitT=setTimeout(fitAll,120);});
+
+/* ---------- ตัวจับเวลา ---------- */
+const T={total:60,left:60,run:false,end:0,iv:null,sel:'#qtimer',lastS:null};
+function tSet(sec,sel){tStop();T.total=sec;T.left=sec;T.sel=sel;T.lastS=null;tDraw();}
+function tStart(){if(T.left<=0)T.left=T.total;T.run=true;T.end=performance.now()+T.left*1000;clearInterval(T.iv);T.iv=setInterval(tTick,200);tDraw();}
+function tPause(){if(!T.run)return;T.left=Math.max(0,(T.end-performance.now())/1000);T.run=false;clearInterval(T.iv);tDraw();}
+function tStop(){T.run=false;clearInterval(T.iv);}
+function tTick(){T.left=Math.max(0,(T.end-performance.now())/1000);const s=Math.ceil(T.left);
+  if(s!==T.lastS){T.lastS=s;if(s<=5&&s>0)SFX.tick();}
+  if(T.left<=0){tStop();SFX.end();}tDraw();}
+function tDraw(){const el=$(T.sel);if(!el)return;const s=Math.ceil(T.left);
+  el.querySelector('.tm').textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+  const fg=el.querySelector('.ring-fg');if(fg)fg.style.strokeDashoffset=String(100-100*T.left/T.total);
+  el.classList.toggle('low',T.left<=10&&T.left>0);el.classList.toggle('over',T.left<=0);
+  const b=$('#tgo');if(b)b.textContent=T.run?'หยุดเวลา':(T.left>0&&T.left<T.total?'เดินเวลาต่อ':'เริ่มจับเวลา');}
+
+/* ---------- ลูกเล่น ---------- */
+function confetti(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const box=document.createElement('div');box.className='confetti';
+  const cols=['var(--sale)','var(--burst)','var(--t0)','var(--t1)','var(--t2)','var(--v-p20)'];
+  for(let i=0;i<80;i++){const p=document.createElement('i');p.style.left=Math.random()*100+'%';p.style.background=cols[i%cols.length];
+    p.style.setProperty('--dx',((Math.random()*2-1)*160)+'px');p.style.setProperty('--r',(Math.random()*900-450)+'deg');
+    p.style.animationDelay=(Math.random()*.3)+'s';box.appendChild(p);}
+  document.body.appendChild(box);setTimeout(()=>box.remove(),2500);
+}
+function toast(html,code){
+  const el=document.createElement('div');el.className='toast';el.setAttribute('role','status');
+  el.innerHTML=`<span>${html}</span>${code?coupon(code,'sm'):''}`;document.body.appendChild(el);
+  setTimeout(()=>el.classList.add('out'),2800);setTimeout(()=>el.remove(),3300);
+}
+function barcode(seed){
+  const digits='885'+String(4021+seed*137).padStart(4,'0')+'0'+String(seed+1)+'26';let bars='';
+  for(const ch of digits+digits.split('').reverse().join('')){const d=+ch;bars+=`<i style="width:${1+d%3}px"></i><i class="g" style="width:${1+(d*7)%3}px"></i>`;}
+  return `<div class="barcode" aria-hidden="true"><div class="bars">${bars}</div><small>${digits}</small></div>`;
+}
+
+/* ---------- หน้าต่าง ๆ ---------- */
+function vHome(){
+  const qd=Object.keys(S.qDone).length,qt=S.questions.length,ld=Object.keys(S.lotDone).length,lt=S.lots.length;
+  return `<section class="wrap fit home">
+   <div class="hero">
+    <div><p class="eyebrow">คณิตศาสตร์ ม.1 · ร้อยละ</p><h1>ร้อยละ<br><em>MEGA SALE</em></h1>
+    <p class="lead">ไขโจทย์โปรโมชันชิงคูปอง แล้วใช้คูปองเป็นส่วนลดตอนประมูลขนมจริง</p></div>
+    <div class="burst-wrap" aria-hidden="true"><div class="burst"><span>ลดสูงสุด</span><b>30%</b></div></div>
+   </div>
+   <div class="acts">
+    <button class="act" data-go="a1"><span class="act-k">กิจกรรม 1 · แข่งกัน ${S.teams.length} ทีม</span><b>Flash Sale ชิงคูปอง</b><span>ตอบโจทย์ลดราคาให้ถูกก่อนเพื่อน รับคูปองไปใช้ในกิจกรรม 2</span><span class="prog">ตอบแล้ว ${qd}/${qt} ข้อ</span></button>
+    <button class="act" data-go="a2"><span class="act-k">กิจกรรม 2 · งบทีมละ ฿${money(S.settings.budget)}</span><b>ประมูลขนม</b><span>เสนอราคาแข่งกัน ชนะแล้วใช้คูปองได้ แต่ทีมต้องคิดราคาสุทธิเอง</span><span class="prog">ขายแล้ว ${ld}/${lt} ชิ้น</span></button>
+   </div>
+   <div class="home-links"><button class="btn" data-go="setup">ตั้งค่าทีม ขนม โจทย์ และรูป</button></div>
+  </section>`;
+}
+function vBoard(){
+  const cols=[1,2,3,4].map(t=>{const qs=orderedQ().filter(q=>+q.tier===t);if(!qs.length)return '';const TT=TIERS[t];
+    const rw=t===4?'<span class="col-rw">ความรู้รอบตัว</span>':chip(TT.reward);
+    return `<div class="col"><div class="col-head"><span class="stars">${t===4?'':TT.stars}</span><span>${TT.name}</span>${rw}</div>
+     ${qs.map(q=>{const d=S.qDone[q.id],w=d&&d.winner!=null;
+       return `<button class="tile ${d?'done':''}" data-act="openq" data-q="${q.id}">${photo(q.img,q.item,q.icon)}<span class="t-no">${qLabel(q)}</span>${d?`<span class="stamp" style="${w?tc(d.winner):'--tc:var(--ink-2)'}">${w?esc(S.teams[d.winner].name):'ไม่มีผู้ได้'}</span>`:(t===4?chip(rewardOf(q)):'')}</button>`;}).join('')}
+    </div>`;}).join('');
+  return `<section class="wrap fit boardv"><div class="vhead"><div><p class="eyebrow">กิจกรรม 1</p><h2>Flash Sale ชิงคูปอง</h2></div>
+   <div class="vhead-tools"><button class="btn yellow" data-act="rules" data-k="a1">กติกา</button><button class="btn" data-go="a2">ไปกิจกรรม 2 →</button></div></div>
+   <div class="board">${cols}</div></section>`;
+}
+function vQuestion(){
+  const q=curQ();if(!q){S.view='a1';return vBoard();}
+  const TT=TIERS[q.tier],d=S.qDone[q.id],locked=S.qLocked[q.id]||[],bonus=+q.tier===4,show=UI.revealed;
+  if(UI.cover&&!d){
+    const sec=TT.time,len=sec>=60?`${Math.floor(sec/60)}:${String(sec%60).padStart(2,'0')} นาที`:`${sec} วินาที`;
+    return `<section class="wrap fit cover">
+     <div class="qv-top"><button class="btn ghost" data-go="a1">← กระดาน</button><span class="tier">${qLabel(q)} · ${bonus?'ความรู้รอบตัว':TT.stars+' '+TT.name}</span></div>
+     <div class="cover-card">
+      <p class="cover-k">Flash Sale กำลังจะเริ่ม · ทุกทีมพร้อมไหม?</p>
+      <p class="cover-no">${qLabel(q)}</p>
+      <p class="cover-tier">${bonus?'คำถามโบนัส · ความรู้รอบตัว':TT.stars+' ระดับ'+TT.name}</p>
+      <div class="cover-meta"><span>รางวัล</span>${coupon(rewardOf(q),'sm')}<span>เวลา ${len}</span></div>
+      <button class="go" data-act="go-q" id="go-q">เริ่ม!</button>
+      <p class="cover-hint">กดแล้วโจทย์ขึ้นและเริ่มจับเวลาทันที · กด Space หรือ Enter ก็ได้</p>
+     </div></section>`;
+  }
+  const tags=(q.tags||[]).map(t=>`<div class="tag">${t.label?`<small>${esc(t.label)}</small>`:''}<b class="price">${esc(t.price)}</b>${t.badge?`<span class="badge">${esc(t.badge)}</span>`:''}</div>`).join('');
+  const choices=bonus&&q.choices&&q.choices.length?`<ol class="choices">${q.choices.map((c,i)=>`<li class="${show&&i===+q.correct?'correct':''}"><b>${CH[i]}</b><span>${esc(c)}</span></li>`).join('')}</ol>`:'';
+  const steps=q.steps&&q.steps.length?`<ol class="steps-l">${q.steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ol>`:'';
+  let card;
+  if(bonus){
+    card=`<h2 class="q-text" style="font-size:${show?'2.6em':'3.2em'}">${esc(q.text)}</h2>${choices}${show?`<span class="sol-k">เฉลย</span>${steps}`:''}`;
+  }else if(show){
+    card=`<p class="sol-q">${esc(q.item)} · ${(q.tags||[]).map(t=>esc((t.label?t.label+' ':'')+t.price+(t.badge?' '+t.badge:''))).join(' / ')} — ${esc(q.text)}</p><span class="sol-k">เฉลย</span><p class="ans">${esc(q.answer)}</p>${steps}`;
+  }else{
+    card=`<p class="item">${esc(q.item)}</p>${tags?`<div class="tags">${tags}</div>`:''}<h2 class="q-text">${esc(q.text)}</h2>`;
+  }
+  const judge=S.teams.map((t,i)=>{const isL=locked.includes(i),won=d&&d.winner===i;
+    return `<div class="jt ${isL?'locked':''} ${won?'won':''}" style="${tc(i)}"><span class="jt-n">${esc(t.name)}${isL?' <small>ตอบผิด</small>':''}${won?' <small>ได้คูปอง</small>':''}</span><button class="jb ok" data-act="right" data-t="${i}" ${d||isL?'disabled':''}>ถูก</button><button class="jb no" data-act="wrong" data-t="${i}" ${d||isL?'disabled':''}>ผิด</button></div>`;}).join('');
+  const allLocked=!d&&locked.length>=S.teams.length,next=d?nextQ(q):null;
+  return `<section class="wrap fit qv">
+   <div class="qv-top"><button class="btn ghost" data-go="a1">← กระดาน</button><span class="tier">${qLabel(q)} · ${bonus?'ความรู้รอบตัว':TT.stars+' '+TT.name}</span><span class="rw-line">รางวัล ${coupon(rewardOf(q),'sm')}</span>
+    <div class="timer" id="qtimer">${ringSVG()}<span class="tm">0:00</span><button class="btn primary" data-act="tgo" id="tgo" ${d?'disabled':''}>เริ่มจับเวลา</button><button class="btn ghost" data-act="treset" title="ตั้งเวลาใหม่">↺</button></div></div>
+   <div class="qv-stage ${UI.pop?'pop':''}">${photo(q.img,q.item,q.icon)}<article class="qcard" data-fit>${card}</article></div>
+   <div class="qv-ctrl">${judge}
+    ${allLocked?'<span class="note">ทุกทีมตอบผิด</span>':(!d&&locked.length?'<span class="note">ทีมอื่นแย่งตอบได้!</span>':'')}
+    <span class="grow"></span>
+    ${d?'<button class="btn" data-act="reopen">เปิดข้อนี้ใหม่</button>':'<button class="btn" data-act="nobody">ไม่มีทีมได้</button>'}
+    <button class="btn ${show?'':'yellow'}" data-act="reveal">${show?'ซ่อนเฉลย':'เฉลย'}</button>
+    ${next?`<button class="btn primary" data-act="openq" data-q="${next.id}">ข้อถัดไป →</button>`:''}
+    ${d&&!next?'<button class="btn primary" data-go="a2">ไปประมูลขนม →</button>':''}
+   </div></section>`;
+}
+function nextBid(){const a=S.auction,l=getLot(a.lotId);return a.leader==null?l.start:a.high+S.settings.step;}
+function vAuction(){
+  const a=S.auction;
+  const list=S.lots.map((l,i)=>{const d=S.lotDone[l.id],on=a&&a.lotId===l.id;
+    return `<button class="lot-btn ${d?'sold':''} ${on?'on':''}" data-act="lot" data-l="${l.id}" ${d||(a&&!on)?'disabled':''}>${thumb(l.img,l.name,l.icon)}<span class="ln">LOT ${i+1} · ${esc(l.name)}</span><span class="ls">${d?`<span class="sold-tag" style="${tc(d.team)}">${esc(S.teams[d.team].name)} ฿${money(d.paid)}</span>`:on?'กำลังประมูล':`เปิด ฿${money(l.start)}`}</span></button>`;}).join('');
+  let stage;
+  if(!a){const left=S.lots.filter(l=>!S.lotDone[l.id]).length;
+    stage=`<div class="stage-empty"><p class="eyebrow">กิจกรรม 2</p><h2>ประมูลขนม</h2><p class="big">${left?'กดเลือกขนมจากรายการเพื่อเปิดประมูล':'ขายครบทุกชิ้นแล้ว'}</p><div class="row"><button class="btn yellow" data-act="rules" data-k="a2">กติกา</button>${left?'':'<button class="btn primary" data-go="results">ดูสรุปผล →</button>'}</div></div>`;
+  }else{
+    const l=getLot(a.lotId),idx=S.lots.indexOf(l),nb=nextBid(),leader=a.leader!=null?S.teams[a.leader]:null;
+    stage=`<div class="stage">
+     <div class="lot-card"><span class="lot-no">LOT ${idx+1}</span>${photo(l.img,l.name,l.icon)}<h2 class="lot-name">${esc(l.name)}</h2>
+      <div class="lot-meta"><span>ราคาในร้าน <b>${l.mystery?'???':'฿'+money(l.store)}</b></span><span>เปิดประมูล <b>฿${money(l.start)}</b></span></div></div>
+     <div class="bid-zone">
+      <div class="bid-now" ${leader?`style="${tc(a.leader)}"`:''}><small>${leader?'ราคาสูงสุดตอนนี้':'ยังไม่มีทีมเสนอราคา'}</small><b class="bid-num" id="bidnum">฿${money(leader?a.high:l.start)}</b>${leader?`<span class="leader">${esc(leader.name)} นำอยู่</span>`:'<span class="leader none">ราคาเปิด</span>'}<button class="count" id="count" data-act="cancel-count" hidden></button></div>
+      <div class="bidders">${S.teams.map((t,i)=>{const can=i!==a.leader&&nb<=t.budget;
+        return `<button class="bidder" style="${tc(i)}" data-act="bid" data-t="${i}" ${can?'':'disabled'}><span>${esc(t.name)}</span><b>฿${money(nb)}</b><small>${i===a.leader?'นำอยู่':nb>t.budget?'เงินไม่พอ':'มี ฿'+money(t.budget)}</small></button>`;}).join('')}</div>
+      <div class="steps"><span>เพิ่มทีละ</span>${[10,20,50,100].map(s=>`<button class="step ${S.settings.step===s?'on':''}" data-act="step" data-s="${s}" aria-pressed="${S.settings.step===s}">฿${s}</button>`).join('')}</div>
+      <div class="row"><button class="btn hammer" data-act="hammer" ${leader?'':'disabled'}>เคาะไม้ ขาย!</button><button class="btn" data-act="undo-bid" ${a.log.length?'':'disabled'}>ย้อนการเสนอ</button><button class="btn ghost" data-act="close-lot" ${a.log.length?'disabled':''}>พักชิ้นนี้</button></div>
+      ${a.log.length?`<ol class="bid-log">${a.log.slice(-6).reverse().map(x=>`<li style="${tc(x.t)}"><i></i>${esc(S.teams[x.t].name)} ฿${money(x.amt)}</li>`).join('')}</ol>`:''}
+     </div></div>`;
+  }
+  return `<section class="wrap fit av"><aside class="lots"><div class="lots-h"><h3>ขนมวันนี้</h3><button class="btn sm" data-act="rules" data-k="a2">กติกา</button></div>${list}</aside>${stage}</section>`;
+}
+function vResults(){
+  const data=S.teams.map((t,i)=>{const bid=sum(t.basket.map(b=>b.bid)),paid=r2(sum(t.basket.map(b=>b.paid))),saved=r2(bid-paid),pct=bid?r2(saved/bid*100):0;return {t,i,bid,paid,saved,pct};});
+  const any=data.some(d=>d.t.basket.length),best=Math.max(...data.map(d=>d.pct));
+  const rec=data.map(d=>{const isBest=any&&best>0&&d.pct===best;
+    return `<article class="receipt" style="${tc(d.i)}">
+     <header><b class="rc-team">${esc(d.t.name)}</b><small class="muted">ร้อยละ MEGA SALE · ใบเสร็จ</small>${isBest?'<span class="best-tag">นักช้อปคุ้มที่สุด</span>':''}</header>
+     <div>${d.t.basket.length?d.t.basket.map(b=>{const l=getLot(b.lotId)||{name:'ขนม',icon:'🍬'};return `<div class="rl"><span>${thumb(l.img,l.name,l.icon)} ${esc(l.name)}</span><span>${b.paid<b.bid?`<s>${money(b.bid)}</s> `:''}${money(b.paid)}</span></div>`;}).join(''):'<p class="muted">ยังไม่ได้ขนม</p>'}</div>
+     <div class="rc-sum"><div class="rl"><span>ราคาประมูลรวม</span><span>${money(d.bid)}</span></div><div class="rl"><span>ส่วนลดจากคูปอง</span><span>−${money(d.saved)}</span></div><div class="rl strong"><span>จ่ายจริง</span><span>฿${money(d.paid)}</span></div><div class="rl"><span>เงินคงเหลือ</span><span>฿${money(d.t.budget)}</span></div></div>
+     <div class="rc-pct"><small>ประหยัดได้</small><b>${money(d.pct)}%</b><small>ของราคาประมูลรวม</small></div>
+     ${d.t.wallet.some(w=>!w.used)?`<div class="rc-left"><small class="muted">คูปองที่ยังไม่ได้ใช้</small>${d.t.wallet.filter(w=>!w.used).map(w=>chip(w.code)).join('')}</div>`:''}
+     ${barcode(d.i)}
+    </article>`;}).join('');
+  let think='';
+  const sold=S.lots.filter(l=>S.lotDone[l.id]&&+l.store>0);
+  if(sold.length){const l=sold.reduce((m,x)=>S.lotDone[x.id].paid>S.lotDone[m.id].paid?x:m),d=S.lotDone[l.id],diff=r2(d.paid-l.store),pct=r2(Math.abs(diff)/l.store*100),more=diff>=0;
+    think=`<div class="think"><p class="eyebrow">ชวนคิดก่อนจบคาบ</p><p class="think-q">${esc(S.teams[d.team].name)} จ่าย ฿${money(d.paid)} ได้${esc(l.name)} ซึ่งราคาในร้านคือ ฿${money(l.store)} — ทีมจ่าย${more?'แพงกว่า':'ถูกกว่า'}ราคาในร้านกี่เปอร์เซ็นต์?</p>
+     <details><summary>ดูเฉลย</summary><ol><li>${more?'แพงกว่า':'ถูกกว่า'} ${money(Math.abs(diff))} บาท</li><li>${money(Math.abs(diff))}/${money(l.store)} × 100 = ${money(pct)}%</li></ol></details></div>`;}
+  return `<section class="wrap"><div class="vhead"><div><p class="eyebrow">ปิดร้าน</p><h2>สรุปผลการช้อป</h2></div><div class="vhead-tools"><button class="btn" data-go="a2">← กลับไปประมูล</button></div></div>
+   ${any?'':'<p class="big muted" style="margin-top:.6rem">ยังไม่มีการประมูล ใบเสร็จจะขึ้นเมื่อขายขนมชิ้นแรก</p>'}
+   <div class="receipts">${rec}</div>${think}</section>`;
+}
+function imgPick(kind,id,img,alt,emo){
+  const def=DEF_IMG[id];
+  return `<div class="imgpick">${thumb(img,alt,emo)}<label class="btn sm upl">เปลี่ยนรูป<input type="file" accept="image/*" data-up="${kind}" data-id="${id}" aria-label="เลือกรูปใหม่ของ ${esc(alt)}"></label>${def&&img!==def?`<button class="btn sm ghost" data-act="img-reset" data-kind="${kind}" data-id="${id}">ใช้รูปเดิม</button>`:''}</div>`;
+}
+function qEditor(q){
+  const b=+q.tier===4,id=q.id;
+  const tagsTxt=(q.tags||[]).map(t=>t.label?`${t.label} | ${t.price} | ${t.badge||''}`:(t.badge?`${t.price} | ${t.badge}`:t.price)).join('\n');
+  const f=(fld,label,val,cls='')=>`<label class="fld ${cls}"><span>${label}</span><input id="q${fld}-${id}" data-bind="q" data-q="${id}" data-f="${fld}" value="${esc(val)}"></label>`;
+  return `<details class="qe" data-q="${id}" ${UI.openQ===id?'open':''}><summary>${thumb(q.img,q.item,q.icon)}<span class="tier">${qLabel(q)}${b?'':' '+TIERS[q.tier].stars}</span><span>${esc(q.item)}</span><span class="muted">${esc(q.text)}</span></summary>
+   <div class="qe-body">
+    <div class="fld wide"><span>รูปสินค้า</span>${imgPick('q',id,q.img,q.item,q.icon)}</div>
+    <label class="fld"><span>ระดับ</span><select id="qtier-${id}" data-bind="q" data-q="${id}" data-f="tier">${[1,2,3,4].map(t=>`<option value="${t}" ${+q.tier===t?'selected':''}>${t===4?'โบนัส ความรู้รอบตัว':TIERS[t].stars+' '+TIERS[t].name}</option>`).join('')}</select></label>
+    ${f('item','สินค้า / หัวข้อ',q.item)}${f('icon','อีโมจิ (ใช้เมื่อไม่มีรูป)',q.icon)}
+    <label class="fld wide"><span>ป้ายราคา บรรทัดละป้าย (ป้ายกำกับ | ราคา | โปร)</span><textarea id="qtags-${id}" rows="2" data-bind="q" data-q="${id}" data-f="tags">${esc(tagsTxt)}</textarea></label>
+    ${f('text','คำถาม',q.text,'wide')}
+    <label class="fld wide" ${b?'':'hidden'}><span>ตัวเลือก ก–ง บรรทัดละข้อ</span><textarea id="qchoices-${id}" rows="4" data-bind="q" data-q="${id}" data-f="choices">${esc((q.choices||[]).join('\n'))}</textarea></label>
+    <label class="fld" ${b?'':'hidden'}><span>ข้อที่ถูก</span><select id="qcorrect-${id}" data-bind="q" data-q="${id}" data-f="correct">${CH.map((c,i)=>`<option value="${i}" ${+q.correct===i?'selected':''}>${c}</option>`).join('')}</select></label>
+    <label class="fld" ${b?'':'hidden'}><span>รางวัล</span><select id="qreward-${id}" data-bind="q" data-q="${id}" data-f="reward">${Object.keys(VOUCHERS).map(c=>`<option value="${c}" ${q.reward===c?'selected':''}>${VOUCHERS[c].title}</option>`).join('')}</select></label>
+    ${f('answer','คำตอบ',q.answer)}
+    <label class="fld wide"><span>วิธีคิด บรรทัดละขั้น</span><textarea id="qsteps-${id}" rows="3" data-bind="q" data-q="${id}" data-f="steps">${esc((q.steps||[]).join('\n'))}</textarea></label>
+    <div class="row end wide"><button class="btn sm ghost" data-act="q-del" data-q="${id}">ลบโจทย์นี้</button></div>
+   </div></details>`;
+}
+function vSetup(){
+  const st=S.settings,started=Object.keys(S.lotDone).length>0||!!S.auction;
+  return `<section class="wrap setup">
+   <div class="vhead"><div><p class="eyebrow">สำหรับครู</p><h2>ตั้งค่า</h2></div><p class="muted">บันทึกอัตโนมัติในเบราว์เซอร์เครื่องนี้ · กด “เปลี่ยนรูป” เพื่อใช้รูปถ่ายของจริงของครูเอง</p></div>
+   <div class="set-grid">
+    <fieldset class="box"><legend>ทีมและกติกา</legend>
+     ${S.teams.map((t,i)=>`<label class="fld"><span><i class="dot" style="${tc(i)}"></i>ชื่อทีม ${i+1}</span><input id="tn${i}" data-bind="team-name" data-t="${i}" value="${esc(t.name)}" maxlength="20"></label>`).join('')}
+     <label class="fld"><span>งบประมูลเริ่มต้นต่อทีม (บาท)</span><input id="s-budget" type="number" min="50" step="10" data-bind="set" data-k="budget" value="${st.budget}"></label>
+     ${started?'<p class="muted">เริ่มประมูลแล้ว งบใหม่จะใช้ตอนกด “เริ่มเกมใหม่”</p>':''}
+     <label class="fld"><span>เวลาคิดราคาสุทธิตอนจ่าย (วินาที)</span><input id="s-pay" type="number" min="10" step="5" data-bind="set" data-k="payTime" value="${st.payTime}"></label>
+    </fieldset>
+    <fieldset class="box"><legend>ขนมที่จะประมูล</legend>
+     <div class="lot-rows">${S.lots.map((l,i)=>`<div class="lot-row">
+       ${imgPick('l',l.id,l.img,l.name,l.icon)}
+       <label class="mini">ชื่อขนม<input id="lnm${i}" data-bind="lot" data-i="${i}" data-f="name" value="${esc(l.name)}"></label>
+       <label class="mini">ราคาในร้าน<input id="lst${i}" type="number" min="0" data-bind="lot" data-i="${i}" data-f="store" value="${l.store}"></label>
+       <label class="mini">เปิดประมูล<input id="lsp${i}" type="number" min="0" step="10" data-bind="lot" data-i="${i}" data-f="start" value="${l.start}"></label>
+       <label class="mini chk"><input id="lmy${i}" type="checkbox" data-bind="lot" data-i="${i}" data-f="mystery" ${l.mystery?'checked':''}>ซ่อนราคา</label>
+       <button class="btn sm ghost" data-act="lot-del" data-i="${i}" ${S.lotDone[l.id]||(S.auction&&S.auction.lotId===l.id)?'disabled':''}>ลบ</button></div>`).join('')}</div>
+     <div class="row"><button class="btn sm" data-act="lot-add">เพิ่มขนม</button></div>
+    </fieldset>
+   </div>
+   <fieldset class="box"><legend>โจทย์กิจกรรม 1</legend>
+    <div class="q-rows">${orderedQ().map(qEditor).join('')}</div>
+    <div class="row"><button class="btn sm" data-act="q-add" data-tier="1">เพิ่มโจทย์ ★</button><button class="btn sm" data-act="q-add" data-tier="2">เพิ่มโจทย์ ★★</button><button class="btn sm" data-act="q-add" data-tier="3">เพิ่มโจทย์ ★★★</button><button class="btn sm" data-act="q-add" data-tier="4">เพิ่มคำถามโบนัส</button></div>
+   </fieldset>
+   <fieldset class="box danger"><legend>เริ่มใหม่</legend>
+    <p>“เริ่มเกมใหม่” ล้างคูปอง เงิน และขนมที่ประมูลได้ แต่เก็บชื่อทีม โจทย์ รูป และรายการขนมไว้</p>
+    <div class="row"><button class="btn" data-act="confirm" data-do="newgame">เริ่มเกมใหม่</button><button class="btn ghost" data-act="confirm" data-do="factory">คืนค่าเริ่มต้นทั้งหมด</button></div>
+   </fieldset>
+  </section>`;
+}
+function mRules(k){
+  if(k==='a1')return `<p class="eyebrow">กิจกรรม 1</p><h2>กติกา Flash Sale ชิงคูปอง</h2>
+   <ol class="rules"><li>ทุกทีมคิดพร้อมกัน เขียนวิธีคิดลงใบคิดเลข</li><li>ได้คำตอบแล้ว<b>ชูป้ายทีม</b> ทีมที่ชูก่อนได้ตอบก่อน</li><li>ถูก <b>รับคูปอง</b> · ผิด ทีมอื่นแย่งตอบได้</li><li>ข้อยิ่งยาก คูปองยิ่งลดเยอะ</li></ol>
+   <div class="rule-coupons"><div>${coupon('P10','sm')}<small>★ ง่าย</small></div><div>${coupon('P20','sm')}<small>★★ กลาง</small></div><div>${coupon('P30','sm')}<small>★★★ ยาก</small></div><div>${coupon('F50','sm')}<small>โบนัส</small></div></div>`;
+  return `<p class="eyebrow">กิจกรรม 2</p><h2>กติกาประมูลขนม</h2>
+   <ol class="rules"><li>ทุกทีมมีเงิน <b>฿${money(S.settings.budget)}</b> เท่ากัน</li><li>ชูป้ายเพื่อเสนอราคา เสนอได้ไม่เกินเงินที่มี</li><li>ครูนับ หนึ่ง สอง สาม แล้วเคาะ = ขายแล้ว</li><li>ใช้คูปองได้ 1 ใบต่อขนม 1 ชิ้น (“ลดเพิ่ม 10%” ใช้ร่วมได้)</li><li>ทีมต้อง<b>คิดราคาสุทธิเอง</b>ใน ${S.settings.payTime} วินาที ถูก จ่ายราคาลด · ผิด จ่ายเต็ม</li></ol>`;
+}
+function mTeam(i){
+  const t=S.teams[i];
+  return `<h2><span class="tname" style="${tc(i)}">${esc(t.name)}</span> · แก้ไขกระเป๋า</h2>
+   <div class="row" style="align-items:flex-end"><label class="fld" style="flex:1 1 12rem"><span>ชื่อทีม</span><input id="te-name" data-bind="team-name" data-t="${i}" value="${esc(t.name)}" maxlength="20"></label>
+   <label class="fld" style="flex:1 1 10rem"><span>เงินคงเหลือ (บาท)</span><input id="te-budget" type="number" min="0" data-bind="team-budget" data-t="${i}" value="${t.budget}"></label></div>
+   <h3>คูปองในกระเป๋า</h3>
+   <div class="te-wallet">${t.wallet.length?t.wallet.map(w=>`<div class="te-w ${w.used?'used':''}">${coupon(w.code,'sm')}<span class="muted">${w.used?'ใช้แล้ว':'ยังไม่ใช้'}</span><button class="btn sm ghost" data-act="te-del" data-t="${i}" data-uid="${w.uid}">ลบ</button></div>`).join(''):'<p class="muted">ยังไม่มีคูปอง</p>'}</div>
+   <div class="row"><select id="te-add" aria-label="เลือกคูปองที่จะเพิ่ม" style="width:auto">${Object.keys(VOUCHERS).map(c=>`<option value="${c}">${VOUCHERS[c].title}</option>`).join('')}</select><button class="btn sm" data-act="te-add" data-t="${i}">เพิ่มคูปองให้ทีม</button></div>
+   <div class="row end"><button class="btn primary" data-act="close">เสร็จ</button></div>`;
+}
+function mCheckout(){
+  const a=S.auction,co=a.co,t=S.teams[a.leader],l=getLot(a.lotId);
+  const head=`<div class="sold-row">${thumb(l.img,l.name,l.icon)}<span class="stamp big" style="${tc(a.leader)}">ขายแล้ว!</span><div><p class="eyebrow">${esc(l.name)}</p><h2><span class="tname" style="${tc(a.leader)}">${esc(t.name)}</span> ชนะที่ ฿${money(a.high)}</h2></div></div>`;
+  if(co.stage==='choose'){
+    const w=t.wallet.filter(x=>!x.used);
+    const picks=w.length?`<div class="wallet-pick">${w.map(x=>{const why=canUse(x.code,a.high),on=co.sel.includes(x.uid);
+      return `<button class="pickc" data-act="co-sel" data-uid="${x.uid}" ${why?'disabled':''} aria-pressed="${on}">${coupon(x.code)}${why?`<small class="why">${why}</small>`:''}</button>`;}).join('')}</div>`:'<p class="muted big">ทีมนี้ยังไม่มีคูปอง</p>';
+    return head+`<h3>ทีมจะใช้คูปองใบไหน?</h3>${picks}<p class="hint">ใช้ได้ 1 ใบต่อขนม 1 ชิ้น · คูปอง “ลดเพิ่ม 10%” ใช้ร่วมกับใบอื่นได้</p>
+     <div class="row end"><button class="btn" data-act="pay-full">ไม่ใช้คูปอง · จ่ายเต็ม ฿${money(a.high)}</button>${w.length?`<button class="btn primary" data-act="to-calc" ${co.sel.length?'':'disabled'}>ใช้คูปองที่เลือก → ให้ทีมคำนวณ</button>`:''}</div>`;
+  }
+  const codes=co.sel.map(uid=>(walletItem(a.leader,uid)||{}).code).filter(Boolean),r=calc(a.high,codes);
+  const used=`<div class="calc-q"><b class="cq-price">฿${money(a.high)}</b><span>ใช้</span>${codes.map(c=>coupon(c,'sm')).join('<span>+</span>')}</div>`;
+  if(co.stage==='calc')return head+`<h3>${esc(t.name)} คิดให้ได้: ต้องจ่ายสุทธิกี่บาท?</h3>${used}
+     <div class="timer" id="cotimer">${ringSVG()}<span class="tm">0:00</span></div>
+     <p class="hint">คิดถูก จ่ายราคาลด · คิดผิด จ่ายเต็มและได้คูปองคืน</p><div class="row end"><button class="btn primary" data-act="co-reveal">เฉลย</button></div>`;
+  return head+`${used}<div class="co-sol"><span class="sol-k">เฉลย</span><ol class="steps-l">${r.steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ol><p class="ans">จ่ายสุทธิ ฿${money(r.net)}</p></div>
+   <div class="row end"><button class="btn" data-act="co-wrong">ทีมคิดผิด · จ่ายเต็ม ฿${money(a.high)}</button><button class="btn primary" data-act="co-right">ทีมคิดถูก · จ่าย ฿${money(r.net)}</button></div>`;
+}
+
+/* ---------- วาดหน้าจอ ---------- */
+function renderTeams(){
+  $('#regs').innerHTML=S.teams.map((t,i)=>{const w=t.wallet.filter(x=>!x.used);
+    return `<div class="reg" style="${tc(i)}"><button class="reg-name" data-act="team" data-t="${i}" title="แก้ไขเงินและคูปองของทีม">${esc(t.name)}</button>
+     <div class="reg-body"><b class="reg-cash">฿${money(t.budget)}</b>
+      <div class="reg-wallet">${w.length?w.map(x=>chip(x.code)).join(''):'<span class="muted">ยังไม่มีคูปอง</span>'}</div>
+      ${t.basket.length?`<div class="reg-basket">${t.basket.map(b=>{const l=getLot(b.lotId)||{name:'ขนม',icon:'🍬'};return thumb(l.img,l.name,l.icon);}).join('')}</div>`:''}</div></div>`;}).join('');
+}
+function renderModal(){
+  const m=$('#modal');let html='',lock=false;
+  if(S.auction&&S.auction.co){html=mCheckout();lock=true;}
+  else if(UI.modal&&UI.modal.type==='rules')html=mRules(UI.modal.k);
+  else if(UI.modal&&UI.modal.type==='team')html=mTeam(UI.modal.t);
+  if(!html){m.hidden=true;m.innerHTML='';m.dataset.lock='';return;}
+  m.hidden=false;m.dataset.lock=lock?'1':'';
+  m.innerHTML=`<div class="sheet" role="dialog" aria-modal="true">${lock?'':'<button class="x" data-act="close" aria-label="ปิด">×</button>'}${html}</div>`;
+  if(lock&&S.auction.co.stage==='calc')tDraw();
+}
+function render(){
+  const v=S.view,map={home:vHome,a1:vBoard,q:vQuestion,a2:vAuction,results:vResults,setup:vSetup};
+  $('#view').innerHTML=(map[v]||vHome)();
+  document.querySelectorAll('#nav [data-go]').forEach(b=>{if(b.dataset.go===(S.view==='q'?'a1':S.view))b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
+  renderTeams();renderModal();
+  if(S.view==='q')tDraw();
+  fitAll();
+  const gq=$('#go-q');if(gq&&!UI.modal)try{gq.focus({preventScroll:true});}catch(e){}
+  $('#snd').textContent=S.sound?'เสียง เปิด':'เสียง ปิด';
+}
+function go(v){if(!(S.auction&&S.auction.co))tStop();cancelCount();S.view=v;UI.modal=null;save();render();$('#view').scrollTop=0;}
+
+/* ---------- ประมูล: นับถอยหลัง ---------- */
+let CD=null;
+function cancelCount(){if(CD){clearInterval(CD);CD=null;const el=$('#count');if(el)el.hidden=true;}}
+function bumpBid(){const n=$('#bidnum');if(n){n.classList.remove('bump');void n.offsetWidth;n.classList.add('bump');}}
+
+/* ---------- รูปที่ครูอัปโหลด: ย่อเป็น JPEG ไม่เกิน 720px ---------- */
+function readPhoto(file){return new Promise((res,rej)=>{const fr=new FileReader();fr.onerror=rej;fr.onload=()=>{const im=new Image();im.onerror=rej;im.onload=()=>{
+  const s=Math.min(1,720/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);
+  const g=c.getContext('2d');g.fillStyle='#ffffff';g.fillRect(0,0,c.width,c.height);g.drawImage(im,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.82));};im.src=fr.result;};fr.readAsDataURL(file);});}
+function setImg(kind,id,src){const o=kind==='q'?S.questions.find(x=>x.id===id):S.lots.find(x=>x.id===id);if(!o)return;const old=o.img;o.img=src;
+  if(!save()){toast('ใช้รูปนี้ได้ในรอบนี้ แต่บันทึกในเบราว์เซอร์ไม่ได้ (พื้นที่เต็มหรือถูกปิดไว้)');}
+  render();return old;}
+
+/* ---------- การกระทำ ---------- */
+function finalize(useV){
+  const a=S.auction,ti=a.leader,t=S.teams[ti],l=getLot(a.lotId);
+  const codes=useV?a.co.sel.map(uid=>(walletItem(ti,uid)||{}).code).filter(Boolean):[];
+  const paid=useV?calc(a.high,codes).net:a.high;
+  t.budget=r2(t.budget-paid);
+  if(useV)a.co.sel.forEach(uid=>{const w=walletItem(ti,uid);if(w)w.used=l.id;});
+  t.basket.push({lotId:l.id,bid:a.high,paid,codes});
+  S.lotDone[l.id]={team:ti,bid:a.high,paid,codes};
+  const bid=a.high;tStop();S.auction=null;save();render();SFX.ok();
+  toast(`<b>${esc(t.name)}</b> ได้${esc(l.name)} · จ่าย ฿${money(paid)}${paid<bid?` (ประหยัด ฿${money(bid-paid)})`:''}`);
+}
+const A={
+  openq:b=>{const q=S.questions.find(x=>x.id===b.dataset.q);if(!q)return;S.curQ=q.id;S.view='q';UI.revealed=!!S.qDone[q.id];UI.cover=!S.qDone[q.id];
+    tSet(TIERS[q.tier].time,'#qtimer');save();render();$('#view').scrollTop=0;},
+  'go-q':()=>{const q=curQ();if(!q||!UI.cover)return;UI.cover=false;UI.pop=true;tSet(TIERS[q.tier].time,'#qtimer');render();UI.pop=false;tStart();SFX.go();},
+  right:(b,t)=>{const q=curQ();if(!q||S.qDone[q.id])return;const code=rewardOf(q),uid='v'+(S.seq++);
+    S.teams[t].wallet.push({uid,code,from:q.id,used:null});S.qDone[q.id]={winner:t,uid};tStop();UI.revealed=true;save();render();SFX.ok();confetti();
+    toast(`<b>${esc(S.teams[t].name)}</b> ได้คูปอง`,code);},
+  wrong:(b,t)=>{const q=curQ();if(!q||S.qDone[q.id])return;const L=S.qLocked[q.id]||(S.qLocked[q.id]=[]);if(!L.includes(t))L.push(t);SFX.no();save();render();},
+  nobody:()=>{const q=curQ();if(!q)return;S.qDone[q.id]={winner:null};tStop();UI.revealed=true;save();render();},
+  reveal:()=>{UI.revealed=!UI.revealed;render();},
+  reopen:()=>{const q=curQ();if(!q)return;const d=S.qDone[q.id];let note='';
+    if(d&&d.winner!=null){const tm=S.teams[d.winner],i=tm.wallet.findIndex(w=>w.uid===d.uid);
+      if(i>=0&&!tm.wallet[i].used)tm.wallet.splice(i,1);else if(i>=0)note='คูปองข้อนี้ถูกใช้ไปแล้ว จึงเอาคืนไม่ได้';}
+    delete S.qDone[q.id];delete S.qLocked[q.id];UI.revealed=false;UI.cover=true;tSet(TIERS[q.tier].time,'#qtimer');save();render();if(note)toast(note);},
+  tgo:()=>{T.run?tPause():tStart();},
+  treset:()=>{tSet(T.total,'#qtimer');},
+  rules:b=>{UI.modal={type:'rules',k:b.dataset.k};renderModal();},
+  team:(b,t)=>{UI.modal={type:'team',t};renderModal();},
+  close:()=>{UI.modal=null;renderModal();},
+  'te-del':b=>{const t=+b.dataset.t,tm=S.teams[t];tm.wallet=tm.wallet.filter(w=>w.uid!==b.dataset.uid);save();renderTeams();renderModal();},
+  'te-add':b=>{const t=+b.dataset.t,code=$('#te-add').value;S.teams[t].wallet.push({uid:'v'+(S.seq++),code,from:'ครู',used:null});save();renderTeams();renderModal();},
+  sound:()=>{S.sound=!S.sound;save();$('#snd').textContent=S.sound?'เสียง เปิด':'เสียง ปิด';if(S.sound)SFX.bid();},
+  full:()=>{const d=document;try{if(d.fullscreenElement){d.exitFullscreen();return;}const p=d.documentElement.requestFullscreen&&d.documentElement.requestFullscreen();
+    if(p&&p.catch)p.catch(()=>toast('เปิดเต็มจอจากหน้านี้ไม่ได้ ลองกด F11'));else if(!p)toast('เปิดเต็มจอจากหน้านี้ไม่ได้ ลองกด F11');}catch(e){toast('เปิดเต็มจอจากหน้านี้ไม่ได้ ลองกด F11');}},
+  lot:b=>{if(S.auction)return;S.auction={lotId:b.dataset.l,high:null,leader:null,log:[],co:null};save();render();},
+  step:b=>{S.settings.step=+b.dataset.s;save();render();},
+  bid:(b,t)=>{const a=S.auction;if(!a||a.co)return;const amt=nextBid();if(t===a.leader||amt>S.teams[t].budget)return;
+    cancelCount();a.log.push({t,amt,ph:a.high,pl:a.leader});a.high=amt;a.leader=t;SFX.bid();save();render();bumpBid();},
+  'undo-bid':()=>{const a=S.auction;if(!a||!a.log.length)return;cancelCount();const x=a.log.pop();a.high=x.ph;a.leader=x.pl;save();render();},
+  hammer:()=>{const a=S.auction;if(!a||a.leader==null||CD)return;let n=0;const words=['หนึ่ง…','สอง…','สาม!'];
+    const show=()=>{const el=$('#count');if(el){el.hidden=false;el.innerHTML=`${words[n]}<small>แตะเพื่อยกเลิก · ทีมอื่นยังเสนอราคาแทรกได้</small>`;}SFX.tick();};
+    show();CD=setInterval(()=>{n++;if(n<3)show();else{clearInterval(CD);CD=null;SFX.bang();a.co={stage:'choose',sel:[]};save();render();confetti();}},950);},
+  'cancel-count':()=>cancelCount(),
+  'close-lot':()=>{if(S.auction&&!S.auction.log.length){S.auction=null;save();render();}},
+  'co-sel':b=>{const a=S.auction,co=a.co,uid=b.dataset.uid,w=walletItem(a.leader,uid);if(!w)return;
+    const isX=VOUCHERS[w.code].kind==='extra',kindOf=u=>{const x=walletItem(a.leader,u);return x?VOUCHERS[x.code].kind:'';};
+    if(co.sel.includes(uid))co.sel=co.sel.filter(x=>x!==uid);
+    else{co.sel=co.sel.filter(x=>isX?kindOf(x)!=='extra':kindOf(x)==='extra');co.sel.push(uid);}
+    save();renderModal();},
+  'pay-full':()=>finalize(false),
+  'to-calc':()=>{S.auction.co.stage='calc';save();tSet(S.settings.payTime,'#cotimer');renderModal();tStart();},
+  'co-reveal':()=>{tStop();S.auction.co.stage='reveal';save();renderModal();},
+  'co-right':()=>finalize(true),
+  'co-wrong':()=>finalize(false),
+  'img-reset':b=>{const id=b.dataset.id;if(DEF_IMG[id])setImg(b.dataset.kind,id,DEF_IMG[id]);},
+  'lot-add':()=>{S.lots.push({id:'l'+(S.seq++),img:'',icon:'🍭',name:'ขนมใหม่',store:20,start:30,mystery:false});save();render();},
+  'lot-del':b=>{const l=S.lots[+b.dataset.i];if(!l||S.lotDone[l.id]||(S.auction&&S.auction.lotId===l.id))return;S.lots.splice(+b.dataset.i,1);save();render();},
+  'q-add':b=>{const tier=+b.dataset.tier,id='u'+(S.seq++);
+    const q={id,tier,img:'',icon:'🏷️',item:'สินค้าใหม่',tags:[{price:'฿100',badge:'ลด 10%'}],text:'ต้องจ่ายกี่บาท?',answer:'90 บาท',steps:['ส่วนลด = 100 × 10/100 = 10 บาท','ราคาที่จ่าย = 100 − 10 = 90 บาท']};
+    if(tier===4)Object.assign(q,{icon:'❓',item:'ความรู้รอบตัว',tags:[],text:'พิมพ์คำถามที่นี่',choices:['ตัวเลือก ก','ตัวเลือก ข','ตัวเลือก ค','ตัวเลือก ง'],correct:0,reward:'F50',answer:'ตัวเลือก ก',steps:[]});
+    S.questions.push(q);UI.openQ=id;save();render();},
+  'q-del':b=>{const id=b.dataset.q;S.questions=S.questions.filter(q=>q.id!==id);delete S.qDone[id];delete S.qLocked[id];save();render();},
+  confirm:b=>{if(b.dataset.armed){A[b.dataset.do]();return;}b.dataset.armed='1';const old=b.textContent;b.textContent='กดอีกครั้งเพื่อยืนยัน';b.classList.add('armed');
+    setTimeout(()=>{if(b.isConnected){delete b.dataset.armed;b.textContent=old;b.classList.remove('armed');}},3500);},
+  newgame:()=>{S.teams.forEach(t=>{t.budget=S.settings.budget;t.wallet=[];t.basket=[];});S.qDone={};S.qLocked={};S.lotDone={};S.auction=null;S.curQ=null;S.view='home';UI.modal=null;tStop();save();render();toast('เริ่มเกมใหม่แล้ว');},
+  factory:()=>{const snd=S.sound;S=freshState();S.sound=snd;UI.modal=null;UI.openQ=null;tStop();save();render();toast('คืนค่าเริ่มต้นแล้ว');},
+};
+
+document.addEventListener('click',e=>{
+  const m=$('#modal');if(e.target===m&&!m.dataset.lock){UI.modal=null;renderModal();return;}
+  const b=e.target.closest('[data-go],[data-act]');if(!b||b.disabled)return;
+  if(b.dataset.go){go(b.dataset.go);return;}
+  const f=A[b.dataset.act];if(f)f(b,+b.dataset.t);
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&UI.modal&&!(S.auction&&S.auction.co)){UI.modal=null;renderModal();return;}
+  if(S.view==='q'&&UI.cover&&!UI.modal&&(e.key===' '||e.key==='Enter')&&!(e.target.closest&&e.target.closest('button,input,select,textarea,summary,a'))){e.preventDefault();A['go-q']();}
+});
+document.addEventListener('toggle',e=>{const d=e.target;if(d.classList&&d.classList.contains('qe')){if(d.open)UI.openQ=d.dataset.q;else if(UI.openQ===d.dataset.q)UI.openQ=null;}},true);
+function parseTags(v){return v.split('\n').map(s=>s.trim()).filter(Boolean).map(line=>{const p=line.split('|').map(x=>x.trim());
+  if(p.length>=3)return {label:p[0],price:p[1],badge:p[2]};if(p.length===2)return {price:p[0],badge:p[1]};return {price:p[0]};});}
+function onBind(e){
+  const el=e.target;
+  if(el.dataset&&el.dataset.up&&e.type==='change'){const file=el.files&&el.files[0];if(!file)return;
+    readPhoto(file).then(src=>setImg(el.dataset.up,el.dataset.id,src)).catch(()=>toast('เปิดรูปนี้ไม่ได้ ลองใช้ไฟล์ JPG หรือ PNG'));return;}
+  const k=el.dataset&&el.dataset.bind;if(!k)return;
+  if(k==='team-name'){const i=+el.dataset.t;S.teams[i].name=el.value.trim()||('ทีม '+(i+1));renderTeams();}
+  else if(k==='team-budget'){S.teams[+el.dataset.t].budget=r2(Math.max(0,+el.value||0));renderTeams();}
+  else if(k==='set'){const v=Math.round(+el.value||0);if(v<=0)return;S.settings[el.dataset.k]=v;
+    if(el.dataset.k==='budget'&&!Object.keys(S.lotDone).length&&!S.auction){S.teams.forEach(t=>t.budget=v);renderTeams();}}
+  else if(k==='lot'){const l=S.lots[+el.dataset.i],f=el.dataset.f;if(!l)return;
+    if(f==='mystery')l.mystery=el.checked;else if(f==='store'||f==='start')l[f]=Math.max(0,+el.value||0);else l[f]=el.value;}
+  else if(k==='q'){const q=S.questions.find(x=>x.id===el.dataset.q);if(!q)return;const f=el.dataset.f,v=el.value;
+    if(f==='tier'){if(e.type!=='change')return;q.tier=+v;if(q.tier===4){q.choices=q.choices&&q.choices.length?q.choices:['','','',''];q.correct=q.correct??0;q.reward=q.reward||'F50';}
+      UI.openQ=q.id;save();render();return;}
+    if(f==='tags')q.tags=parseTags(v);else if(f==='steps')q.steps=v.split('\n').map(s=>s.trim()).filter(Boolean);
+    else if(f==='choices')q.choices=v.split('\n').map(s=>s.trim()).slice(0,4);else if(f==='correct')q.correct=+v;else q[f]=v;}
+  save();
+}
+document.addEventListener('input',onBind);document.addEventListener('change',onBind);
+
+/* ---------- เริ่มทำงาน ---------- */
+(function burst(){const pts=[];for(let i=0;i<28;i++){const a=(i*360/28-90)*Math.PI/180,r=i%2?41:50;pts.push(`${(50+r*Math.cos(a)).toFixed(1)}% ${(50+r*Math.sin(a)).toFixed(1)}%`);}
+  document.documentElement.style.setProperty('--burst-poly',`polygon(${pts.join(',')})`);})();
+function start(data){
+  S=(data&&data.S&&data.S.v===3&&data.S)||load()||freshState();
+  const base=freshState();S.settings=Object.assign(base.settings,S.settings||{});S.qLocked=S.qLocked||{};
+  if(S.view==='q'){const q=curQ();if(q){UI.revealed=!!S.qDone[q.id];UI.cover=!S.qDone[q.id];tSet(TIERS[q.tier].time,'#qtimer');}else S.view='a1';}
+  if(S.auction&&S.auction.co&&S.auction.co.stage==='calc')S.auction.co.stage='reveal';
+  render();
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitAll);
+}
+try{window.claude&&window.claude.hot&&window.claude.hot.snapshot&&window.claude.hot.snapshot(()=>({S}));}catch(e){}
+const H=window.claude&&window.claude.hot;
+if(H&&H.ready)H.ready(start);else start((H&&H.data)||{});
+})();
+</script>
+
+</html>
